@@ -3,8 +3,10 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { ArrowUpRight, ArrowRight } from "lucide-react";
 import SectionEyebrow from "@/components/ui/SectionEyebrow";
 import SectionHeading from "@/components/ui/SectionHeading";
+import { useBlurReveal, useStaggerBlurReveal } from "@/hooks/useGSAP";
 import {
   getPublishedProjects,
   getProjectCategories,
@@ -17,6 +19,12 @@ export default function ProjectsPage() {
   const [activeFilter, setActiveFilter] = useState<"All" | ProjectCategory>(
     "All"
   );
+  const headerRef = useBlurReveal<HTMLDivElement>({ y: 24, blur: 8 });
+  const listRef = useStaggerBlurReveal<HTMLDivElement>(".project-item-card", {
+    y: 28,
+    blur: 6,
+    stagger: 0.1,
+  });
 
   const filteredProjects =
     activeFilter === "All"
@@ -31,7 +39,7 @@ export default function ProjectsPage() {
       <section className="section pt-32 md:pt-40">
         <div className="section-inner">
           {/* Header */}
-          <div className="text-center mb-12">
+          <div ref={headerRef} className="text-center mb-12">
             <SectionEyebrow label="My Portfolio" className="justify-center" />
             <SectionHeading
               regular="Let's Have a Look at"
@@ -74,14 +82,14 @@ export default function ProjectsPage() {
           {hasProjects ? (
             <>
               {filteredProjects.length > 0 ? (
-                <div className="space-y-8">
+                <div ref={listRef} className="space-y-8">
                   {filteredProjects.map((project, index) => {
                     const isReversed = index % 2 !== 0;
                     return (
-                      <div key={project.id} className="card overflow-hidden">
+                      <div key={project.id} className="card project-item-card overflow-hidden group">
                         <div className="grid grid-cols-1 md:grid-cols-2">
                           <div
-                            className={`relative aspect-[4/3] md:aspect-auto md:min-h-[320px] bg-[var(--bg-page)] ${
+                            className={`relative aspect-[4/3] md:aspect-auto md:min-h-[320px] bg-[var(--bg-page)] overflow-hidden ${
                               isReversed ? "md:order-2" : ""
                             }`}
                           >
@@ -89,11 +97,11 @@ export default function ProjectsPage() {
                               src={project.thumbnail}
                               alt={project.thumbnailAlt}
                               fill
-                              className="object-cover"
+                              className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                               sizes="(max-width: 768px) 100vw, 50vw"
                             />
                             {project.isConcept && (
-                              <span className="absolute top-4 left-4 tag text-xs bg-[var(--accent)] text-white border-none">
+                              <span className="absolute top-4 left-4 tag text-xs bg-[var(--accent)] text-white border-none shadow-md">
                                 Concept
                               </span>
                             )}
@@ -103,7 +111,7 @@ export default function ProjectsPage() {
                               isReversed ? "md:order-1" : ""
                             }`}
                           >
-                            <h3 className="text-[length:var(--text-h3)] font-bold mb-1">
+                            <h3 className="text-[length:var(--text-h3)] font-bold mb-1 group-hover:text-[var(--accent)] transition-colors">
                               {project.title} –{" "}
                               <span className="text-[var(--accent)] font-serif italic">
                                 {project.category}
@@ -140,9 +148,10 @@ export default function ProjectsPage() {
                             </div>
                             <Link
                               href={`/projects/${project.slug}/`}
-                              className="btn-ghost inline-flex items-center gap-1 text-sm self-start"
+                              className="btn-ghost inline-flex items-center gap-1.5 text-sm self-start group/btn font-medium"
                             >
-                              View Details →
+                              <span>View Details</span>
+                              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover/btn:translate-x-1" />
                             </Link>
                           </div>
                         </div>
@@ -170,7 +179,9 @@ export default function ProjectsPage() {
                 className="btn btn-primary px-6 py-3"
               >
                 Discuss Your Project
-                <span className="btn-circle-arrow">→</span>
+                <span className="btn-circle-arrow">
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </span>
               </Link>
             </div>
           )}

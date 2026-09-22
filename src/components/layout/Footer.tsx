@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Mail, MessageCircle } from "lucide-react";
+import { Mail, MessageCircle, ArrowUpRight } from "lucide-react";
 import { profile } from "@/content/profile";
 import { formatPhoneDisplay, getPrimaryWhatsAppUrl } from "@/lib/helpers";
 
@@ -15,9 +15,12 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-[var(--bg-surface)] border-t border-[var(--border)]">
+    <footer className="bg-[var(--bg-surface)] border-t border-[var(--border)] relative overflow-hidden">
+      {/* Subtle ambient light in footer */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-32 bg-[var(--accent)]/5 blur-3xl pointer-events-none" />
+
       {/* Pre-footer CTA */}
-      <div className="section-inner px-5 md:px-8 py-16 md:py-24 text-center">
+      <div className="section-inner px-5 md:px-8 py-16 md:py-24 text-center relative z-10">
         <h2 className="text-[length:var(--text-h1)] font-bold tracking-tight mb-6">
           Let&apos;s{" "}
           <span className="text-[var(--accent)] font-serif italic">
@@ -25,9 +28,11 @@ export default function Footer() {
           </span>{" "}
           there
         </h2>
-        <Link href="/contact/" className="btn btn-primary text-base px-8 py-4">
+        <Link href="/contact/" className="btn btn-primary text-base px-8 py-4 shadow-lg shadow-[var(--accent)]/15">
           Contact Me
-          <span className="btn-circle-arrow">→</span>
+          <span className="btn-circle-arrow">
+            <ArrowUpRight className="w-4 h-4" />
+          </span>
         </Link>
       </div>
 
@@ -39,10 +44,11 @@ export default function Footer() {
             <div>
               <Link
                 href="/"
-                className="text-xl font-bold tracking-tight text-[var(--text-primary)]"
+                className="inline-flex items-center gap-2 text-xl font-bold tracking-tight text-[var(--text-primary)] group"
               >
-                <span className="text-[var(--accent)]">●</span> Arifur
-                <span className="text-[var(--text-tertiary)]">.</span>
+                <span className="w-2.5 h-2.5 rounded-full bg-[var(--accent)] shadow-sm shadow-[var(--accent)] group-hover:scale-125 transition-transform duration-300" />
+                <span>Arifur</span>
+                <span className="text-[var(--accent)]">.</span>
               </Link>
               <p className="mt-4 text-sm text-[var(--text-secondary)] leading-relaxed max-w-[280px]">
                 Full-Stack Developer helping founders and businesses build

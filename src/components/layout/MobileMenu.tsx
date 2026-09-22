@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
-import { X } from "lucide-react";
+import { X, ArrowUpRight } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 const navLinks = [
@@ -141,10 +141,12 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
           <Link
             href="/contact/"
             onClick={onClose}
-            className="btn btn-primary w-full justify-center text-lg py-4"
+            className="btn btn-primary w-full justify-center text-lg py-4 shadow-lg shadow-[var(--accent)]/20"
           >
             Discuss Your Project
-            <span className="btn-circle-arrow">→</span>
+            <span className="btn-circle-arrow">
+              <ArrowUpRight className="w-5 h-5" />
+            </span>
           </Link>
         </div>
       </div>

@@ -1,10 +1,15 @@
+"use client";
+
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import SectionEyebrow from "@/components/ui/SectionEyebrow";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Accordion from "@/components/ui/Accordion";
 import { services } from "@/content/services";
+import { useBlurReveal } from "@/hooks/useGSAP";
 
 export default function ServicesOverview() {
+  const headerRef = useBlurReveal<HTMLDivElement>({ y: 24, blur: 8 });
   const accordionItems = services.map((service, index) => ({
     number: String(index + 1).padStart(2, "0"),
     title: service.title,
@@ -30,7 +35,7 @@ export default function ServicesOverview() {
     <section className="section">
       <div className="section-inner">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
+        <div ref={headerRef} className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
           <div>
             <SectionEyebrow label="My Specialization" />
             <SectionHeading regular="Services" accent="I Provide" />
@@ -48,7 +53,9 @@ export default function ServicesOverview() {
         <div className="mt-10 flex justify-center">
           <Link href="/services/" className="btn btn-primary px-6 py-3">
             View All Services
-            <span className="btn-circle-arrow">→</span>
+            <span className="btn-circle-arrow">
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </span>
           </Link>
         </div>
       </div>

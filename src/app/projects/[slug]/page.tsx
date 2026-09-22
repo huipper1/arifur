@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ArrowUpRight, ExternalLink, Code } from "lucide-react";
 import SectionEyebrow from "@/components/ui/SectionEyebrow";
 import MarqueeStrip from "@/components/layout/MarqueeStrip";
 import { getPublishedProjects, getProjectBySlug } from "@/content/projects";
@@ -242,9 +243,10 @@ export default function ProjectCaseStudy({
                         href={project.demoUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="btn btn-primary w-full justify-center"
+                        className="btn btn-primary w-full justify-center gap-2"
                       >
-                        View Live Demo →
+                        <ExternalLink className="w-4 h-4" />
+                        View Live Demo
                       </a>
                     )}
                     {project.repositoryUrl && (
@@ -252,9 +254,10 @@ export default function ProjectCaseStudy({
                         href={project.repositoryUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="btn btn-outline w-full justify-center"
+                        className="btn btn-outline w-full justify-center gap-2"
                       >
-                        View Repository →
+                        <Code className="w-4 h-4" />
+                        View Repository
                       </a>
                     )}
                   </div>
@@ -263,10 +266,12 @@ export default function ProjectCaseStudy({
                 {/* CTA */}
                 <Link
                   href="/contact/"
-                  className="btn btn-primary w-full justify-center"
+                  className="btn btn-primary w-full justify-center shadow-lg shadow-[var(--accent)]/15"
                 >
                   Discuss a Similar Project
-                  <span className="btn-circle-arrow">→</span>
+                  <span className="btn-circle-arrow">
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </span>
                 </Link>
               </div>
             </div>

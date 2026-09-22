@@ -93,17 +93,24 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           }}
         />
       </head>
-      <body className="min-h-screen flex flex-col antialiased">
+      <body className="min-h-screen flex flex-col antialiased relative selection:bg-[var(--accent)] selection:text-white">
+        {/* Background Grid & Ambient Glow Effects */}
+        <div className="bg-grid-pattern" aria-hidden="true" />
+        <div className="ambient-glow-top" aria-hidden="true" />
+        <div className="ambient-glow-center" aria-hidden="true" />
+
         {/* Skip to content */}
         <a href="#main-content" className="skip-to-content">
           Skip to main content
         </a>
 
-        <Header />
-        <main id="main-content" className="flex-1">
-          {children}
-        </main>
-        <Footer />
+        <div className="relative z-10 flex flex-col min-h-screen">
+          <Header />
+          <main id="main-content" className="flex-1">
+            {children}
+          </main>
+          <Footer />
+        </div>
       </body>
     </html>
   );

@@ -1,3 +1,5 @@
+import { Sparkles } from "lucide-react";
+
 interface SectionHeadingProps {
   regular: string;
   accent: string;
@@ -29,10 +31,10 @@ export default function SectionHeading({
       <span className="text-[var(--accent)] font-serif italic">{accent}</span>
       {showSparkle && (
         <span
-          className="inline-block text-[var(--accent)] text-[0.5em] align-super ml-1"
+          className="inline-inline-flex items-center text-[var(--accent)] align-super ml-1.5 opacity-90 transition-transform duration-300 hover:rotate-12 hover:scale-110"
           aria-hidden="true"
         >
-          ✦
+          <Sparkles className="inline-block w-4 h-4 md:w-5 md:h-5 text-[var(--accent)] fill-current" />
         </span>
       )}
     </Tag>

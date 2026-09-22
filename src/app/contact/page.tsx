@@ -2,10 +2,11 @@
 
 import { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { Mail, MessageCircle, Copy, Check, Phone } from "lucide-react";
+import { Mail, MessageCircle, Copy, Check, Phone, Sparkles } from "lucide-react";
 import SectionEyebrow from "@/components/ui/SectionEyebrow";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { profile } from "@/content/profile";
+import { useBlurReveal } from "@/hooks/useGSAP";
 import {
   getWhatsAppUrl,
   getMailtoUrl,
@@ -48,6 +49,7 @@ function ContactContent() {
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [copied, setCopied] = useState(false);
+  const headerRef = useBlurReveal<HTMLDivElement>({ y: 24, blur: 8 });
 
   const validate = (): boolean => {
     const newErrors: Record<string, string> = {};
@@ -103,7 +105,7 @@ function ContactContent() {
       <div className="section-inner">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-12">
           {/* Left: Form */}
-          <div className="lg:col-span-3">
+          <div ref={headerRef} className="lg:col-span-3">
             <SectionEyebrow label="Contact Me" />
             <SectionHeading
               regular="Let's Talk for"
@@ -111,7 +113,7 @@ function ContactContent() {
               as="h1"
               size="h1"
             />
-            <p className="text-[var(--text-secondary)] mt-4 mb-10">
+            <p className="text-[var(--text-secondary)] mt-4 mb-10 leading-relaxed">
               Share your idea, the problem you&apos;re solving, or the part of
               your current product that needs attention.
             </p>
@@ -262,7 +264,7 @@ function ContactContent() {
               <div className="flex flex-wrap gap-3 pt-2">
                 <button
                   onClick={handleEmailDraft}
-                  className="btn btn-primary px-6 py-3"
+                  className="btn btn-primary px-6 py-3.5 shadow-lg shadow-[var(--accent)]/15"
                   type="button"
                 >
                   <Mail className="w-4 h-4" />
@@ -270,7 +272,7 @@ function ContactContent() {
                 </button>
                 <button
                   onClick={() => handleWhatsApp(profile.whatsappPrimary)}
-                  className="btn btn-secondary px-6 py-3"
+                  className="btn btn-outline px-6 py-3.5 hover:border-[#25D366] hover:text-[#25D366]"
                   type="button"
                 >
                   <MessageCircle className="w-4 h-4" />
@@ -278,11 +280,11 @@ function ContactContent() {
                 </button>
                 <button
                   onClick={handleCopy}
-                  className="btn btn-outline px-5 py-3"
+                  className="btn btn-ghost px-5 py-3.5 border border-[var(--border)]"
                   type="button"
                 >
                   {copied ? (
-                    <Check className="w-4 h-4" />
+                    <Check className="w-4 h-4 text-emerald-500" />
                   ) : (
                     <Copy className="w-4 h-4" />
                   )}
@@ -299,25 +301,32 @@ function ContactContent() {
 
           {/* Right: Contact info card */}
           <div className="lg:col-span-2">
-            <div className="bg-[var(--bg-dark)] text-[var(--text-on-dark)] rounded-2xl p-8 lg:sticky lg:top-28 space-y-8">
-              {/* Contact */}
-              <div>
-                <h3 className="text-[var(--accent)] font-semibold text-sm uppercase tracking-wider mb-4">
-                  Contact
-                </h3>
+            <div className="card bg-[var(--bg-dark)] text-[var(--text-on-dark)] p-8 lg:sticky lg:top-28 space-y-8 relative overflow-hidden shadow-2xl">
+              {/* Subtle ambient glow in card */}
+              <div className="absolute -top-16 -right-16 w-40 h-40 bg-[var(--accent)]/15 rounded-full blur-3xl pointer-events-none" />
+              <div className="absolute -bottom-16 -left-16 w-36 h-36 bg-[var(--accent)]/10 rounded-full blur-3xl pointer-events-none" />
+
+              {/* Direct channels */}
+              <div className="relative z-10">
+                <div className="flex items-center gap-2 text-[var(--accent)] font-semibold text-xs uppercase tracking-wider mb-4">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>Direct Channels</span>
+                </div>
                 <ul className="space-y-4">
                   <li>
                     <a
                       href={`https://wa.me/${profile.whatsappPrimary.replace(/[^0-9]/g, "")}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-3 text-sm hover:text-[var(--accent)] transition-colors"
+                      className="flex items-center gap-3 text-sm hover:text-[var(--accent)] transition-colors group"
                     >
-                      <Phone className="w-4 h-4 text-[var(--accent)]" />
+                      <div className="w-9 h-9 rounded-xl bg-[var(--bg-dark-surface)] border border-[var(--border-dark)] flex items-center justify-center group-hover:border-[var(--accent)] transition-colors">
+                        <Phone className="w-4 h-4 text-[var(--accent)]" />
+                      </div>
                       <div>
-                        <div>{formatPhoneDisplay(profile.whatsappPrimary)}</div>
+                        <div className="font-medium">{formatPhoneDisplay(profile.whatsappPrimary)}</div>
                         <div className="text-xs text-[var(--text-on-dark-muted)]">
-                          Primary WhatsApp
+                          Primary WhatsApp (Fastest)
                         </div>
                       </div>
                     </a>
@@ -327,11 +336,13 @@ function ContactContent() {
                       href={`https://wa.me/${profile.whatsappAlternative.replace(/[^0-9]/g, "")}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-3 text-sm hover:text-[var(--accent)] transition-colors"
+                      className="flex items-center gap-3 text-sm hover:text-[var(--accent)] transition-colors group"
                     >
-                      <Phone className="w-4 h-4 text-[var(--accent)]" />
+                      <div className="w-9 h-9 rounded-xl bg-[var(--bg-dark-surface)] border border-[var(--border-dark)] flex items-center justify-center group-hover:border-[var(--accent)] transition-colors">
+                        <Phone className="w-4 h-4 text-[var(--accent)]" />
+                      </div>
                       <div>
-                        <div>
+                        <div className="font-medium">
                           {formatPhoneDisplay(profile.whatsappAlternative)}
                         </div>
                         <div className="text-xs text-[var(--text-on-dark-muted)]">
@@ -343,13 +354,15 @@ function ContactContent() {
                   <li>
                     <a
                       href={`mailto:${profile.email}`}
-                      className="flex items-center gap-3 text-sm hover:text-[var(--accent)] transition-colors"
+                      className="flex items-center gap-3 text-sm hover:text-[var(--accent)] transition-colors group"
                     >
-                      <Mail className="w-4 h-4 text-[var(--accent)]" />
+                      <div className="w-9 h-9 rounded-xl bg-[var(--bg-dark-surface)] border border-[var(--border-dark)] flex items-center justify-center group-hover:border-[var(--accent)] transition-colors">
+                        <Mail className="w-4 h-4 text-[var(--accent)]" />
+                      </div>
                       <div>
-                        <div>{profile.email}</div>
+                        <div className="font-medium">{profile.email}</div>
                         <div className="text-xs text-[var(--text-on-dark-muted)]">
-                          Email
+                          Official Email
                         </div>
                       </div>
                     </a>
@@ -358,22 +371,22 @@ function ContactContent() {
               </div>
 
               {/* Location */}
-              <div>
-                <h3 className="text-[var(--accent)] font-semibold text-sm uppercase tracking-wider mb-2">
-                  Location
+              <div className="relative z-10 pt-4 border-t border-[var(--border-dark)]">
+                <h3 className="text-xs font-semibold uppercase tracking-wider text-[var(--text-on-dark-muted)] mb-2">
+                  Location & Availability
                 </h3>
-                <p className="text-sm text-[var(--text-on-dark-muted)]">
-                  Based in {profile.location}, working globally
+                <p className="text-sm text-[var(--text-on-dark)] leading-relaxed">
+                  Based in {profile.location} · Working globally across UTC+6 friendly timezones
                 </p>
               </div>
 
-              {/* Social — hidden until URLs provided */}
+              {/* Social */}
               {profile.socialLinks.length > 0 && (
-                <div>
-                  <h3 className="text-[var(--accent)] font-semibold text-sm uppercase tracking-wider mb-4">
+                <div className="relative z-10 pt-4 border-t border-[var(--border-dark)]">
+                  <h3 className="text-xs font-semibold uppercase tracking-wider text-[var(--text-on-dark-muted)] mb-3">
                     Stay Connected
                   </h3>
-                  <div className="flex gap-3">
+                  <div className="flex gap-2.5">
                     {profile.socialLinks.map((social) => (
                       <a
                         key={social.platform}
@@ -381,7 +394,7 @@ function ContactContent() {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={social.label}
-                        className="w-10 h-10 rounded-full bg-[var(--bg-dark-surface)] flex items-center justify-center hover:bg-[var(--accent)] transition-colors text-sm"
+                        className="w-10 h-10 rounded-xl bg-[var(--bg-dark-surface)] border border-[var(--border-dark)] flex items-center justify-center hover:bg-[var(--accent)] hover:border-[var(--accent)] transition-colors text-sm"
                       >
                         {social.platform.charAt(0).toUpperCase()}
                       </a>

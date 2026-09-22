@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
 import gsap from "gsap";
 import { profile } from "@/content/profile";
 import SectionEyebrow from "@/components/ui/SectionEyebrow";
@@ -25,23 +26,35 @@ export default function HeroSection() {
     if (prefersReducedMotion) return;
 
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
       if (textRef.current) {
         tl.fromTo(
           textRef.current.children,
-          { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, duration: 0.6, stagger: 0.12 }
+          { opacity: 0, y: 32, filter: "blur(10px)" },
+          { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.8, stagger: 0.12 }
         );
       }
 
       if (imageRef.current) {
         tl.fromTo(
           imageRef.current,
-          { opacity: 0, scale: 0.95 },
-          { opacity: 1, scale: 1, duration: 0.7 },
-          "-=0.4"
+          { opacity: 0, scale: 0.94, filter: "blur(8px)" },
+          { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.9 },
+          "-=0.5"
         );
+
+        // Smooth subtle parallax scrub on scroll
+        gsap.to(imageRef.current, {
+          y: -24,
+          ease: "none",
+          scrollTrigger: {
+            trigger: heroRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: 1.2,
+          },
+        });
       }
 
       if (tagsRef.current) {
@@ -49,9 +62,9 @@ export default function HeroSection() {
         if (tags.length) {
           tl.fromTo(
             tags,
-            { opacity: 0, y: 15, scale: 0.9 },
-            { opacity: 1, y: 0, scale: 1, duration: 0.4, stagger: 0.08 },
-            "-=0.3"
+            { opacity: 0, y: 16, scale: 0.85 },
+            { opacity: 1, y: 0, scale: 1, duration: 0.5, stagger: 0.08, ease: "back.out(1.5)" },
+            "-=0.4"
           );
         }
       }
@@ -82,17 +95,19 @@ export default function HeroSection() {
             </p>
 
             {/* CTAs */}
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-4 pt-2">
               <Link
                 href="/contact/"
-                className="btn btn-primary text-base px-7 py-3.5"
+                className="btn btn-primary text-base px-8 py-4 group"
               >
-                Discuss Your Project
-                <span className="btn-circle-arrow">→</span>
+                <span>Discuss Your Project</span>
+                <span className="btn-circle-arrow">
+                  <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </span>
               </Link>
               <Link
                 href="/services/"
-                className="btn btn-outline text-base px-7 py-3.5"
+                className="btn btn-outline text-base px-8 py-4"
               >
                 Explore My Services
               </Link>
@@ -102,38 +117,38 @@ export default function HeroSection() {
           {/* Portrait + floating tags */}
           <div className="order-1 lg:order-2 relative flex justify-center">
             <div className="relative w-[280px] h-[340px] md:w-[360px] md:h-[420px]">
-              {/* Portrait container with accent background */}
+              {/* Portrait container with subtle ambient glow and shadow */}
               <div
                 ref={imageRef}
-                className="relative w-full h-full rounded-2xl overflow-hidden bg-gradient-to-br from-[var(--accent-light)] to-[var(--bg-surface)] border border-[var(--border)]"
+                className="relative w-full h-full rounded-3xl overflow-hidden bg-gradient-to-br from-[var(--accent-light)] to-[var(--bg-surface)] border border-[var(--border)] shadow-2xl ring-1 ring-black/5 dark:ring-white/10"
               >
                 <Image
                   src={profile.portraitSrc}
                   alt={profile.portraitAlt}
                   fill
-                  className="object-cover"
+                  className="object-cover object-top transition-transform duration-700 hover:scale-105"
                   priority
                   sizes="(max-width: 768px) 280px, 360px"
                 />
               </div>
 
               {/* Floating skill tags */}
-              <div ref={tagsRef}>
-                <div className="absolute -right-4 top-8 flex flex-col gap-2">
+              <div ref={tagsRef} className="pointer-events-none">
+                <div className="absolute -right-3 top-8 flex flex-col gap-2.5 pointer-events-auto">
                   {heroTags.slice(0, 3).map((tag) => (
                     <span
                       key={tag}
-                      className="hero-floating-tag tag tag-dark text-xs px-3 py-1.5"
+                      className="hero-floating-tag tag tag-dark text-xs px-3.5 py-1.5 shadow-lg border border-white/10 backdrop-blur-md cursor-default transition-all duration-300 hover:scale-105 hover:border-[var(--accent)]"
                     >
                       {tag}
                     </span>
                   ))}
                 </div>
-                <div className="absolute -left-4 bottom-16 flex flex-col gap-2">
+                <div className="absolute -left-3 bottom-14 flex flex-col gap-2.5 pointer-events-auto">
                   {heroTags.slice(3).map((tag) => (
                     <span
                       key={tag}
-                      className="hero-floating-tag tag tag-dark text-xs px-3 py-1.5"
+                      className="hero-floating-tag tag tag-dark text-xs px-3.5 py-1.5 shadow-lg border border-white/10 backdrop-blur-md cursor-default transition-all duration-300 hover:scale-105 hover:border-[var(--accent)]"
                     >
                       {tag}
                     </span>

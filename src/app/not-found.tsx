@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 export default function NotFound() {
   return (
@@ -18,9 +19,11 @@ export default function NotFound() {
           mistyped the address.
         </p>
         <div className="flex flex-wrap justify-center gap-4">
-          <Link href="/" className="btn btn-primary px-8 py-3.5">
+          <Link href="/" className="btn btn-primary px-8 py-3.5 shadow-lg shadow-[var(--accent)]/15">
             Return Home
-            <span className="btn-circle-arrow">→</span>
+            <span className="btn-circle-arrow">
+              <ArrowRight className="w-3.5 h-3.5" />
+            </span>
           </Link>
           <Link href="/contact/" className="btn btn-outline px-8 py-3.5">
             Contact Me

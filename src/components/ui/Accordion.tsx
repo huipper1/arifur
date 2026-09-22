@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Plus, X } from "lucide-react";
-import { useStaggerReveal } from "@/hooks/useGSAP";
+import { useStaggerBlurReveal } from "@/hooks/useGSAP";
 
 interface AccordionItem {
   number: string;
@@ -19,8 +19,9 @@ export default function Accordion({ items, defaultOpen }: AccordionProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(
     defaultOpen ?? null
   );
-  const containerRef = useStaggerReveal<HTMLDivElement>(".accordion-item", {
-    y: 20,
+  const containerRef = useStaggerBlurReveal<HTMLDivElement>(".accordion-item", {
+    y: 24,
+    blur: 8,
     stagger: 0.08,
   });
 

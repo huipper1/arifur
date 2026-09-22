@@ -2,17 +2,18 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Plus, X, MessageCircle } from "lucide-react";
+import { Plus, X, MessageCircle, ArrowRight } from "lucide-react";
 import SectionEyebrow from "@/components/ui/SectionEyebrow";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { faqItems } from "@/content/faq";
-import { useStaggerReveal } from "@/hooks/useGSAP";
+import { useStaggerBlurReveal } from "@/hooks/useGSAP";
 
 export default function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(1);
-  const accordionListRef = useStaggerReveal<HTMLDivElement>(".accordion-item", {
+  const accordionListRef = useStaggerBlurReveal<HTMLDivElement>(".accordion-item", {
     y: 20,
-    stagger: 0.08,
+    blur: 6,
+    stagger: 0.07,
   });
 
   const toggle = (index: number) => {
@@ -65,21 +66,25 @@ export default function FAQSection() {
           </div>
 
           {/* Side CTA card */}
-          <div className="bg-[var(--bg-dark)] text-[var(--text-on-dark)] rounded-2xl p-8 flex flex-col items-center text-center h-fit lg:sticky lg:top-32">
-            <div className="w-16 h-16 rounded-full bg-[var(--accent)] flex items-center justify-center mb-4">
+          <div className="card bg-[var(--bg-dark)] text-[var(--text-on-dark)] p-8 flex flex-col items-center text-center h-fit lg:sticky lg:top-32 relative overflow-hidden group">
+            {/* Subtle card glow */}
+            <div className="absolute -top-12 -right-12 w-32 h-32 bg-[var(--accent)]/15 rounded-full blur-2xl pointer-events-none transition-all duration-700 group-hover:scale-150" />
+            
+            <div className="w-16 h-16 rounded-2xl bg-[var(--accent)] flex items-center justify-center mb-5 shadow-lg shadow-[var(--accent)]/20 transition-transform duration-300 group-hover:scale-105">
               <MessageCircle className="w-7 h-7 text-white" />
             </div>
-            <h3 className="text-lg font-bold mb-2">
+            <h3 className="text-xl font-bold mb-2 tracking-tight">
               Have different questions? Ask Away!
             </h3>
-            <p className="text-sm text-[var(--text-on-dark-muted)] mb-6">
-              Your questions, my answers. Quick responses guaranteed.
+            <p className="text-sm text-[var(--text-on-dark-muted)] mb-6 leading-relaxed">
+              Your questions, my answers. Direct, quick, and transparent responses guaranteed.
             </p>
             <Link
               href="/contact/"
-              className="btn btn-primary w-full justify-center"
+              className="btn btn-primary w-full justify-center group/btn"
             >
               Contact Me
+              <ArrowRight className="w-4 h-4 ml-1.5 transition-transform duration-300 group-hover/btn:translate-x-1" />
             </Link>
           </div>
         </div>

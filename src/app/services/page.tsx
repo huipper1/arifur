@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
 import SectionEyebrow from "@/components/ui/SectionEyebrow";
 import SectionHeading from "@/components/ui/SectionHeading";
 import MarqueeStrip from "@/components/layout/MarqueeStrip";
+import ClosingCTA from "@/components/sections/ClosingCTA";
 import { services, industries } from "@/content/services";
 import { profile } from "@/content/profile";
 
@@ -62,9 +64,11 @@ export default function ServicesPage() {
                   </a>
                 ))}
               </div>
-              <Link href="/contact/" className="btn btn-primary px-7 py-3.5">
+              <Link href="/contact/" className="btn btn-primary px-7 py-3.5 shadow-lg shadow-[var(--accent)]/15">
                 Discuss Your Product
-                <span className="btn-circle-arrow">→</span>
+                <span className="btn-circle-arrow">
+                  <ArrowUpRight className="w-4 h-4" />
+                </span>
               </Link>
             </div>
             <div className="lg:col-span-5 flex justify-center">
@@ -157,7 +161,9 @@ export default function ServicesPage() {
                       className="btn btn-primary px-6 py-3"
                     >
                       {service.ctaLabel}
-                      <span className="btn-circle-arrow">→</span>
+                      <span className="btn-circle-arrow">
+                        <ArrowUpRight className="w-3.5 h-3.5" />
+                      </span>
                     </Link>
                   </div>
                 </div>
@@ -221,27 +227,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Closing CTA */}
-      <section className="section">
-        <div className="section-inner text-center">
-          <h2 className="text-[length:var(--text-h1)] font-bold tracking-tight mb-4">
-            Not Sure{" "}
-            <span className="text-[var(--accent)] font-serif italic">
-              Which Service Fits?
-            </span>
-          </h2>
-          <p className="text-[var(--text-secondary)] text-lg mb-8 max-w-[480px] mx-auto">
-            Tell me what you&apos;re working on and I&apos;ll help you figure
-            out the right approach.
-          </p>
-          <Link
-            href="/contact/"
-            className="btn btn-primary text-base px-8 py-4"
-          >
-            Discuss Your Project
-            <span className="btn-circle-arrow">→</span>
-          </Link>
-        </div>
-      </section>
+      <ClosingCTA />
     </>
   );
 }

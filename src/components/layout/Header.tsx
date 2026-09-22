@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu } from "lucide-react";
+import { Menu, ArrowUpRight } from "lucide-react";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import MobileMenu from "./MobileMenu";
 
@@ -42,14 +42,19 @@ export default function Header() {
           {/* Logo / Wordmark */}
           <Link
             href="/"
-            className="text-xl font-bold tracking-tight text-[var(--text-primary)] hover:text-[var(--accent)] transition-colors"
+            className="flex items-center gap-2.5 text-xl font-bold tracking-tight text-[var(--text-primary)] group"
           >
-            <span className="text-[var(--accent)]">●</span>{" "}
-            Arifur<span className="text-[var(--text-tertiary)]">.</span>
+            <span className="flex h-2 w-2 relative">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            <span className="group-hover:text-[var(--accent)] transition-colors">
+              Arifur<span className="text-[var(--accent)]">.</span>
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8" aria-label="Main navigation">
+          <nav className="hidden md:flex items-center gap-1 p-1.5 rounded-full border border-[var(--border)] bg-[var(--bg-surface)]/60 backdrop-blur-md shadow-xs" aria-label="Main navigation">
             {navLinks.map((link) => {
               const isActive =
                 pathname === link.href ||
@@ -59,16 +64,13 @@ export default function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`relative text-sm font-medium transition-colors py-1 ${
+                  className={`relative text-xs font-semibold px-4 py-2 rounded-full transition-all duration-200 ${
                     isActive
-                      ? "text-[var(--accent)]"
-                      : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+                      ? "bg-[var(--accent)] text-white shadow-xs"
+                      : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-page)]/80"
                   }`}
                 >
                   {link.label}
-                  {isActive && (
-                    <span className="absolute -bottom-1 left-0 right-0 h-[2px] bg-[var(--accent)] rounded-full" />
-                  )}
                 </Link>
               );
             })}
@@ -81,15 +83,18 @@ export default function Header() {
             {/* Desktop CTA */}
             <Link
               href="/contact/"
-              className="hidden md:inline-flex btn btn-secondary text-sm px-5 py-2.5"
+              className="hidden md:inline-flex btn btn-primary text-xs font-semibold px-5 py-2.5 shadow-sm group"
             >
-              Contact Me
+              <span>Discuss Project</span>
+              <span className="btn-circle-arrow w-5 h-5">
+                <ArrowUpRight className="w-3 h-3" />
+              </span>
             </Link>
 
             {/* Mobile hamburger */}
             <button
               onClick={() => setMenuOpen(true)}
-              className="md:hidden w-10 h-10 rounded-full border border-[var(--border)] flex items-center justify-center hover:border-[var(--text-tertiary)] transition-colors cursor-pointer"
+              className="md:hidden w-10 h-10 rounded-full border border-[var(--border)] flex items-center justify-center hover:border-[var(--text-tertiary)] transition-colors cursor-pointer bg-[var(--bg-surface)]"
               aria-label="Open navigation menu"
             >
               <Menu className="w-[18px] h-[18px] text-[var(--text-primary)]" />

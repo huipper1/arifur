@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import SectionEyebrow from "@/components/ui/SectionEyebrow";
 import SectionHeading from "@/components/ui/SectionHeading";
 import MarqueeStrip from "@/components/layout/MarqueeStrip";
+import ClosingCTA from "@/components/sections/ClosingCTA";
 import { profile } from "@/content/profile";
 
 export const metadata: Metadata = {
@@ -186,27 +186,7 @@ export default function AboutPage() {
       </section>
 
       {/* Closing CTA */}
-      <section className="section">
-        <div className="section-inner text-center">
-          <h2 className="text-[length:var(--text-h1)] font-bold tracking-tight mb-4">
-            Let&apos;s Build{" "}
-            <span className="text-[var(--accent)] font-serif italic">
-              Something Great
-            </span>
-          </h2>
-          <p className="text-[var(--text-secondary)] text-lg mb-8 max-w-[480px] mx-auto">
-            Ready to turn your idea into working software? Let&apos;s talk about
-            your project.
-          </p>
-          <Link
-            href="/contact/"
-            className="btn btn-primary text-base px-8 py-4"
-          >
-            Start a Conversation
-            <span className="btn-circle-arrow">→</span>
-          </Link>
-        </div>
-      </section>
+      <ClosingCTA />
     </>
   );
 }
