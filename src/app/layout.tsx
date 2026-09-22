@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { profile } from "@/content/profile";
 import "./globals.css";
 
 const inter = Inter({
@@ -18,6 +19,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(profile.siteUrl || "https://arifur.dev"),
   title: {
     default: "Arifur Rahman — Full-Stack Developer",
     template: "%s — Arifur Rahman",
@@ -31,12 +33,21 @@ export const metadata: Metadata = {
     title: "Arifur Rahman — Full-Stack Developer",
     description:
       "SaaS, mobile apps, and web applications built around your business.",
+    images: [
+      {
+        url: "/images/banner-developer.png",
+        width: 1200,
+        height: 630,
+        alt: "Arifur Rahman — Full-Stack Web Developer, Founder & CTO at Huipper",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Arifur Rahman — Full-Stack Developer",
     description:
       "SaaS, mobile apps, and web applications built around your business.",
+    images: ["/images/banner-developer.png"],
   },
   robots: {
     index: true,

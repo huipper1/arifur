@@ -94,20 +94,58 @@ export default function AboutPage() {
             <SectionHeading regular="My" accent="Working Principles" />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {profile.workingPrinciples.map((principle, index) => (
-              <div key={index} className="card p-6 md:p-8">
-                <span className="text-3xl font-bold text-[var(--accent)] opacity-30 font-serif">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <h3 className="text-lg font-bold mt-3 mb-2">
-                  {principle.title}
-                </h3>
-                <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
-                  {principle.description}
-                </p>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+            {/* Visual Photo */}
+            <div className="lg:col-span-5">
+              <div className="relative aspect-[3/4] w-full rounded-2xl overflow-hidden border border-[var(--border)] shadow-xl bg-[var(--bg-surface)]">
+                <Image
+                  src={profile.portraitCasualSrc}
+                  alt="Arifur Rahman — Approachable and pragmatic developer"
+                  fill
+                  className="object-cover object-top"
+                  sizes="(max-width: 1024px) 100vw, 420px"
+                />
               </div>
-            ))}
+              <p className="text-xs text-[var(--text-tertiary)] mt-3 text-center italic">
+                Direct communication, honest feedback, and focused execution
+              </p>
+            </div>
+
+            {/* Principles list */}
+            <div className="lg:col-span-7 flex flex-col gap-4">
+              {profile.workingPrinciples.map((principle, index) => (
+                <div key={index} className="card p-5 md:p-6 transition-transform hover:-translate-y-0.5">
+                  <div className="flex items-start gap-4">
+                    <span className="text-2xl font-bold text-[var(--accent)] opacity-40 font-serif">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <div>
+                      <h3 className="text-base font-bold mb-1.5 text-[var(--text-primary)]">
+                        {principle.title}
+                      </h3>
+                      <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
+                        {principle.description}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Brand & Leadership Banner */}
+      <section className="section py-8">
+        <div className="section-inner">
+          <div className="relative aspect-[21/9] sm:aspect-[3/1] w-full rounded-2xl overflow-hidden border border-[var(--border)] shadow-2xl bg-[var(--bg-dark)]">
+            <Image
+              src={profile.developerBannerSrc}
+              alt="Arifur Rahman — Full Stack Web Developer, Founder & CTO at Huipper"
+              fill
+              className="object-cover"
+              sizes="100vw"
+            />
           </div>
         </div>
       </section>

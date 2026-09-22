@@ -13,13 +13,13 @@ export default function AboutPreview() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Portrait */}
           <div className="relative flex justify-center">
-            <div className="relative w-[260px] h-[320px] md:w-[340px] md:h-[400px] rounded-2xl overflow-hidden bg-gradient-to-br from-[var(--accent-light)] to-[var(--bg-page)] border border-[var(--border)]">
+            <div className="relative w-[280px] h-[350px] md:w-[360px] md:h-[440px] rounded-2xl overflow-hidden bg-gradient-to-br from-[var(--accent-light)] to-[var(--bg-page)] border border-[var(--border)] shadow-xl">
               <Image
-                src={profile.portraitSrc}
+                src={profile.portraitAboutSrc}
                 alt={profile.portraitAlt}
                 fill
-                className="object-cover"
-                sizes="(max-width: 768px) 260px, 340px"
+                className="object-cover object-top"
+                sizes="(max-width: 768px) 280px, 360px"
               />
             </div>
           </div>

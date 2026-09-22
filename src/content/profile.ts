@@ -9,10 +9,19 @@ export const profile = {
   whatsappPrimary: "+8801756601431",
   whatsappAlternative: "+8801707991750",
   bookingUrl: null as string | null,
-  portraitSrc: "/images/portrait-placeholder.jpg",
+  portraitSrc: "/images/arifur-portrait.png",
   portraitAlt: "Arifur Rahman — Full-Stack Developer",
+  portraitAboutSrc: "/images/arifur-about.png",
+  portraitCasualSrc: "/images/arifur-casual.png",
+  brandPosterSrc: "/images/poster-brand.png",
+  developerBannerSrc: "/images/banner-developer.png",
+  automationBannerSrc: "/images/banner-automation.png",
   siteUrl: "", // Set before production launch
-  socialLinks: [] as { platform: string; url: string; label: string }[],
+  company: "Huipper",
+  companyRole: "Founder & CTO",
+  socialLinks: [
+    { platform: "linkedin", url: "https://www.linkedin.com/in/arifurrahman", label: "LinkedIn" },
+  ] as { platform: string; url: string; label: string }[],
   location: "Bangladesh",
   workingGlobally: true,
   bio: [
@@ -49,12 +58,13 @@ export const profile = {
   ],
   techCapabilities: [
     {
-      category: "Frontend",
+      category: "Frontend & Mobile",
       items: [
         "React",
         "Next.js",
         "TypeScript",
         "React Native",
+        "Flutter",
         "Tailwind CSS",
         "GSAP",
       ],
@@ -64,6 +74,7 @@ export const profile = {
       items: [
         "Node.js",
         "Express",
+        "Laravel",
         "Python",
         "REST APIs",
         "GraphQL",

@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import SectionEyebrow from "@/components/ui/SectionEyebrow";
 import SectionHeading from "@/components/ui/SectionHeading";
 import MarqueeStrip from "@/components/layout/MarqueeStrip";
 import { services, industries } from "@/content/services";
+import { profile } from "@/content/profile";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -15,7 +17,7 @@ export default function ServicesPage() {
   return (
     <>
       {/* Hero */}
-      <section className="section pt-32 md:pt-40 pb-16">
+      <section className="section pt-32 md:pt-40 pb-12">
         <div className="section-inner">
           <div className="max-w-[720px]">
             <SectionEyebrow label="What I Do" />
@@ -30,6 +32,52 @@ export default function ServicesPage() {
               products. Every engagement starts with understanding your goals
               and ends with something your team can use and maintain.
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Brand Value Spotlight */}
+      <section className="section pt-0 pb-16">
+        <div className="section-inner">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center bg-[var(--bg-surface)] border border-[var(--border)] rounded-3xl p-8 lg:p-12 shadow-xl">
+            <div className="lg:col-span-7">
+              <SectionEyebrow label="Brand & Product Philosophy" />
+              <h2 className="text-[length:var(--text-h2)] font-bold tracking-tight mt-3 mb-4">
+                Be the Brand They All{" "}
+                <span className="text-[var(--accent)] font-serif italic">
+                  Notice in the Crowd
+                </span>
+              </h2>
+              <p className="text-[var(--text-secondary)] leading-relaxed mb-6">
+                In competitive markets, functional software alone isn&apos;t enough. I help founders build memorable digital products with intentional user experience, resilient architecture, and distinct personality that users love and remember.
+              </p>
+              <div className="flex flex-wrap gap-2.5 mb-8">
+                {services.map((s) => (
+                  <a
+                    key={s.id}
+                    href={`#${s.slug}`}
+                    className="tag text-xs hover:border-[var(--accent)] hover:text-[var(--accent)] transition-colors"
+                  >
+                    {s.title}
+                  </a>
+                ))}
+              </div>
+              <Link href="/contact/" className="btn btn-primary px-7 py-3.5">
+                Discuss Your Product
+                <span className="btn-circle-arrow">→</span>
+              </Link>
+            </div>
+            <div className="lg:col-span-5 flex justify-center">
+              <div className="relative aspect-[4/5] w-[280px] sm:w-[320px] md:w-[350px] rounded-2xl overflow-hidden border border-[var(--border)] shadow-2xl bg-[var(--bg-surface)]">
+                <Image
+                  src={profile.brandPosterSrc}
+                  alt="Be the Brand they all notice in the crowd — Build Products That People Remember"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 280px, 350px"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -120,6 +168,21 @@ export default function ServicesPage() {
                 )}
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Automation & Integrations Feature Banner */}
+      <section className="section py-6">
+        <div className="section-inner">
+          <div className="relative aspect-[21/9] sm:aspect-[3/1] w-full rounded-2xl overflow-hidden border border-[var(--border)] shadow-2xl bg-[var(--bg-dark)]">
+            <Image
+              src={profile.automationBannerSrc}
+              alt="Data-driven solutions & automation workflows for modern businesses"
+              fill
+              className="object-cover"
+              sizes="100vw"
+            />
           </div>
         </div>
       </section>
