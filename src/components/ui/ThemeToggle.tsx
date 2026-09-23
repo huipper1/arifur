@@ -31,29 +31,27 @@ export default function ThemeToggle() {
     localStorage.setItem("theme", next);
   };
 
-  // Avoid hydration mismatch — render nothing until mounted
+  // Avoid hydration mismatch — render placeholder until mounted
   if (!mounted) {
     return (
-      <button
-        className="w-10 h-10 rounded-full flex items-center justify-center"
-        aria-label="Toggle theme"
-        disabled
-      >
-        <div className="w-5 h-5" />
-      </button>
+      <div
+        className="w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-full border border-neutral-200 dark:border-neutral-800 bg-neutral-100/50 dark:bg-neutral-800/50 flex items-center justify-center opacity-60 shrink-0"
+        aria-hidden="true"
+      />
     );
   }
 
   return (
     <button
       onClick={toggle}
-      className="w-10 h-10 rounded-full flex items-center justify-center border border-[var(--border)] hover:border-[var(--text-tertiary)] transition-colors cursor-pointer"
+      className="w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-full flex items-center justify-center border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/60 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] shrink-0 active:scale-95 shadow-xs"
       aria-label={`Switch to ${theme === "light" ? "dark" : "light"} theme`}
+      title={`Switch to ${theme === "light" ? "dark" : "light"} theme`}
     >
       {theme === "light" ? (
-        <Moon className="w-[18px] h-[18px] text-[var(--text-secondary)]" />
+        <Moon className="w-4 h-4 text-neutral-600 transition-transform hover:rotate-12" />
       ) : (
-        <Sun className="w-[18px] h-[18px] text-[var(--text-secondary)]" />
+        <Sun className="w-4 h-4 text-neutral-300 transition-transform hover:rotate-45" />
       )}
     </button>
   );

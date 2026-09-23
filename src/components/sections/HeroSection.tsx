@@ -73,7 +73,7 @@ export default function HeroSection() {
     return () => ctx.revert();
   }, []);
   return (
-    <section ref={heroRef} className="section pt-32 md:pt-40 pb-16 md:pb-24">
+    <section ref={heroRef} className="section pt-32 md:pt-40 pb-28 md:pb-36">
       <div className="section-inner">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Text content */}

@@ -5,6 +5,7 @@ import SelectedWork from "@/components/sections/SelectedWork";
 import AboutPreview from "@/components/sections/AboutPreview";
 import ProcessSection from "@/components/sections/ProcessSection";
 import FAQSection from "@/components/sections/FAQSection";
+import BrandInquirySection from "@/components/sections/BrandInquirySection";
 import ClosingCTA from "@/components/sections/ClosingCTA";
 import { faqItems } from "@/content/faq";
 
@@ -37,6 +38,7 @@ export default function HomePage() {
       <ProcessSection />
       <MarqueeStrip />
       <FAQSection />
+      <BrandInquirySection />
       <ClosingCTA />
     </>
   );

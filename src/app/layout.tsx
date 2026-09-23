@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import FooterBar from "@/components/layout/FooterBar";
 import { profile } from "@/content/profile";
 import "./globals.css";
 
@@ -110,6 +111,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             {children}
           </main>
           <Footer />
+          <FooterBar />
         </div>
       </body>
     </html>

@@ -12,6 +12,7 @@ const navLinks = [
   { href: "/about/", label: "About" },
   { href: "/services/", label: "Services" },
   { href: "/projects/", label: "Projects" },
+  { href: "/pricing/", label: "Pricing" },
   { href: "/contact/", label: "Contact" },
 ];
 
@@ -24,37 +25,45 @@ export default function Header() {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <>
-      <header
-        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-          scrolled
-            ? "bg-[var(--bg-page)]/90 backdrop-blur-lg border-b border-[var(--border)] shadow-sm"
-            : "bg-transparent"
-        }`}
-        style={{ height: "var(--header-height)" }}
-      >
-        <div className="max-w-[var(--max-width)] mx-auto px-5 md:px-8 h-full flex items-center justify-between">
-          {/* Logo / Wordmark */}
+      <header className="fixed top-4 sm:top-5 md:top-6 left-0 right-0 z-40 flex justify-center px-4 sm:px-6 pointer-events-none">
+        <div
+          style={{
+            backgroundColor: "var(--bg-surface)",
+            borderColor: "var(--border)",
+          }}
+          className={`pointer-events-auto flex items-center justify-between gap-6 md:gap-8 lg:gap-10 pl-6 sm:pl-7 pr-2 sm:pr-2.5 h-14 sm:h-15 rounded-full border transition-all duration-300 w-full max-w-sm sm:max-w-xl lg:max-w-fit ${
+            scrolled
+              ? "shadow-[0_16px_40px_-6px_rgba(0,0,0,0.16),0_6px_16px_-2px_rgba(0,0,0,0.08)] dark:shadow-[0_20px_48px_-6px_rgba(0,0,0,0.7)]"
+              : "shadow-[0_10px_32px_-4px_rgba(0,0,0,0.1),0_4px_12px_-2px_rgba(0,0,0,0.05)] dark:shadow-[0_14px_36px_-6px_rgba(0,0,0,0.55)]"
+          }`}
+        >
+          {/* Logo / Brand Name */}
           <Link
             href="/"
-            className="flex items-center gap-2.5 text-xl font-bold tracking-tight text-[var(--text-primary)] group"
+            className="flex items-center gap-2.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] rounded-full select-none shrink-0"
+            aria-label="Arifur Rahman Home"
           >
-            <span className="flex h-2 w-2 relative">
+            <span className="flex h-2.5 w-2.5 relative items-center justify-center shrink-0">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
-            <span className="group-hover:text-[var(--accent)] transition-colors">
+            <span className="text-lg sm:text-xl font-bold tracking-tight text-[var(--text-primary)] group-hover:text-[var(--accent)] transition-colors whitespace-nowrap">
               Arifur<span className="text-[var(--accent)]">.</span>
             </span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-1 p-1.5 rounded-full border border-[var(--border)] bg-[var(--bg-surface)]/60 backdrop-blur-md shadow-xs" aria-label="Main navigation">
+          {/* Desktop Nav Links */}
+          <nav
+            className="hidden lg:flex items-center gap-7 xl:gap-8"
+            aria-label="Main navigation"
+          >
             {navLinks.map((link) => {
               const isActive =
                 pathname === link.href ||
@@ -64,46 +73,55 @@ export default function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`relative text-xs font-semibold px-4 py-2 rounded-full transition-all duration-200 ${
+                  aria-current={isActive ? "page" : undefined}
+                  className={`text-[13px] xl:text-[14px] font-medium transition-colors relative py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] rounded-md whitespace-nowrap ${
                     isActive
-                      ? "bg-[var(--accent)] text-white shadow-xs"
-                      : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-page)]/80"
+                      ? "text-[var(--text-primary)] font-semibold"
+                      : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                   }`}
                 >
                   {link.label}
+                  {isActive && (
+                    <span
+                      className="absolute -bottom-1 left-0 right-0 h-[2px] bg-[var(--accent)] rounded-full transition-all"
+                      aria-hidden="true"
+                    />
+                  )}
                 </Link>
               );
             })}
           </nav>
 
-          {/* Right side: Theme toggle + CTA */}
-          <div className="flex items-center gap-3">
+          {/* Right Action: Divider + Theme toggle + Salient Inset CTA Button + Mobile Menu trigger */}
+          <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
+            <div className="hidden lg:block h-4 w-px bg-[var(--border)] mx-0.5" aria-hidden="true" />
+
             <ThemeToggle />
 
-            {/* Desktop CTA */}
+            {/* Desktop / Tablet CTA Button: Sleek Salient Inset Pill */}
             <Link
               href="/contact/"
-              className="hidden md:inline-flex btn btn-primary text-xs font-semibold px-5 py-2.5 shadow-sm group"
+              className="hidden sm:inline-flex header-cta group"
             >
               <span>Discuss Project</span>
-              <span className="btn-circle-arrow w-5 h-5">
-                <ArrowUpRight className="w-3 h-3" />
-              </span>
+              <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </Link>
 
-            {/* Mobile hamburger */}
+            {/* Mobile / Tablet Menu Button */}
             <button
               onClick={() => setMenuOpen(true)}
-              className="md:hidden w-10 h-10 rounded-full border border-[var(--border)] flex items-center justify-center hover:border-[var(--text-tertiary)] transition-colors cursor-pointer bg-[var(--bg-surface)]"
+              className="lg:hidden w-9 h-9 rounded-full border border-[var(--border)] bg-[var(--bg-surface)] hover:bg-[var(--bg-page)] flex items-center justify-center text-[var(--text-primary)] transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] active:scale-95"
               aria-label="Open navigation menu"
+              aria-expanded={menuOpen}
+              aria-controls="mobile-navigation-menu"
             >
-              <Menu className="w-[18px] h-[18px] text-[var(--text-primary)]" />
+              <Menu className="w-4 h-4" />
             </button>
           </div>
         </div>
       </header>
 
-      {/* Mobile menu */}
+      {/* Mobile & Tablet Navigation Drawer */}
       <MobileMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
     </>
   );
