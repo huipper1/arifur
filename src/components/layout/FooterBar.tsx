@@ -1,9 +1,11 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useSyncExternalStore } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { X, ArrowUp, Volume2, VolumeX, Puzzle, CircleDollarSign, Menu } from "lucide-react";
+import { profile } from "@/content/profile";
 import { getPrimaryWhatsAppUrl } from "@/lib/helpers";
 
 function useIsScrolled(threshold = 200) {
@@ -571,40 +573,29 @@ export default function FooterBar() {
               />
             </svg>
 
-            {/* Elevated Action Button: 3D Glossy Purple Squircle with Chat-Smile */}
+            {/* Elevated Action Button: 3D Glossy Purple Squircle with Arifur's Photo */}
             <Link
               href="/contact/"
               aria-label="Let's Talk"
               style={{
                 background:
                   "radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.45) 0%, transparent 45%), linear-gradient(180deg, #7C3AED 0%, #5B21B6 100%)",
-                borderColor: "rgba(255, 255, 255, 0.28)",
+                borderColor: "rgba(255, 255, 255, 0.35)",
                 boxShadow:
                   "inset 0 1px 1.5px rgba(255, 255, 255, 0.5), 0 8px 24px rgba(110, 65, 248, 0.8)",
                 color: "#FFFFFF",
               }}
-              className="relative z-10 -mt-5 w-[56px] h-[56px] rounded-[18px] border flex items-center justify-center text-white active:scale-90 transition-transform duration-150 group cursor-pointer"
+              className="relative z-10 -mt-5 w-[56px] h-[56px] rounded-[18px] border p-1 flex items-center justify-center text-white active:scale-90 transition-transform duration-150 group cursor-pointer overflow-hidden"
             >
-              <svg
-                width="28"
-                height="28"
-                viewBox="0 0 28 28"
-                fill="none"
-                className="transition-transform duration-200 group-hover:scale-110"
-              >
-                {/* Speech bubble */}
-                <path
-                  d="M14 3.5C8.2 3.5 3.5 7.8 3.5 13.2C3.5 16.1 4.8 18.7 6.9 20.5C6.7 21.9 5.9 23.4 4.8 24.3C4.6 24.5 4.7 24.9 5 24.9C7.3 24.9 9.4 23.8 10.7 22.8C11.8 23.1 12.9 23.2 14 23.2C19.8 23.2 24.5 18.9 24.5 13.2C24.5 7.8 19.8 3.5 14 3.5Z"
-                  fill="#FFFFFF"
+              <div className="relative w-full h-full rounded-[14px] overflow-hidden border border-white/40 shadow-inner bg-neutral-900">
+                <Image
+                  src={profile.portraitSrc}
+                  alt={profile.displayName}
+                  fill
+                  className="object-cover object-top transition-transform duration-300 group-hover:scale-105"
+                  sizes="56px"
                 />
-                {/* Curved smile inside bubble */}
-                <path
-                  d="M10 13.5C11 16.5 17 16.5 18 13.5"
-                  stroke="#6D28D9"
-                  strokeWidth="2.4"
-                  strokeLinecap="round"
-                />
-              </svg>
+              </div>
             </Link>
           </div>
 
