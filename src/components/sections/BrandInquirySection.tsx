@@ -1,10 +1,48 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import { ArrowRight, Check, CheckCircle2, Globe, ChevronDown, MessageCircle } from "lucide-react";
+import { ArrowRight, Check, CheckCircle2, Globe, ChevronDown, MessageCircle, Search } from "lucide-react";
 import { profile } from "@/content/profile";
 import { formatPhoneDisplay, getWhatsAppUrl } from "@/lib/helpers";
+
+export interface CountryOption {
+  code: string;
+  name: string;
+  flag: string;
+  dialCode: string;
+}
+
+export const COUNTRIES: CountryOption[] = [
+  { code: "US", name: "United States", flag: "🇺🇸", dialCode: "+1" },
+  { code: "GB", name: "United Kingdom", flag: "🇬🇧", dialCode: "+44" },
+  { code: "BD", name: "Bangladesh", flag: "🇧🇩", dialCode: "+880" },
+  { code: "CA", name: "Canada", flag: "🇨🇦", dialCode: "+1" },
+  { code: "AU", name: "Australia", flag: "🇦🇺", dialCode: "+61" },
+  { code: "DE", name: "Germany", flag: "🇩🇪", dialCode: "+49" },
+  { code: "FR", name: "France", flag: "🇫🇷", dialCode: "+33" },
+  { code: "IN", name: "India", flag: "🇮🇳", dialCode: "+91" },
+  { code: "AE", name: "United Arab Emirates", flag: "🇦🇪", dialCode: "+971" },
+  { code: "SG", name: "Singapore", flag: "🇸🇬", dialCode: "+65" },
+  { code: "NL", name: "Netherlands", flag: "🇳🇱", dialCode: "+31" },
+  { code: "CH", name: "Switzerland", flag: "🇨🇭", dialCode: "+41" },
+  { code: "SE", name: "Sweden", flag: "🇸🇪", dialCode: "+46" },
+  { code: "IE", name: "Ireland", flag: "🇮🇪", dialCode: "+353" },
+  { code: "NZ", name: "New Zealand", flag: "🇳🇿", dialCode: "+64" },
+  { code: "ES", name: "Spain", flag: "🇪🇸", dialCode: "+34" },
+  { code: "IT", name: "Italy", flag: "🇮🇹", dialCode: "+39" },
+  { code: "JP", name: "Japan", flag: "🇯🇵", dialCode: "+81" },
+  { code: "KR", name: "South Korea", flag: "🇰🇷", dialCode: "+82" },
+  { code: "BR", name: "Brazil", flag: "🇧🇷", dialCode: "+55" },
+  { code: "ZA", name: "South Africa", flag: "🇿🇦", dialCode: "+27" },
+  { code: "SA", name: "Saudi Arabia", flag: "🇸🇦", dialCode: "+966" },
+  { code: "PK", name: "Pakistan", flag: "🇵🇰", dialCode: "+92" },
+  { code: "MY", name: "Malaysia", flag: "🇲🇾", dialCode: "+60" },
+  { code: "ID", name: "Indonesia", flag: "🇮🇩", dialCode: "+62" },
+  { code: "TR", name: "Turkey", flag: "🇹🇷", dialCode: "+90" },
+  { code: "NG", name: "Nigeria", flag: "🇳🇬", dialCode: "+234" },
+  { code: "MX", name: "Mexico", flag: "🇲🇽", dialCode: "+52" },
+];
 
 export interface ContactPerson {
   name: string;
@@ -143,6 +181,51 @@ export default function BrandInquirySection({
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
 
+  // Dynamic Country Code Picker State
+  const [selectedCountry, setSelectedCountry] = useState<CountryOption>(COUNTRIES[0]);
+  const [countryDropdownOpen, setCountryDropdownOpen] = useState(false);
+  const [countrySearchQuery, setCountrySearchQuery] = useState("");
+  const countryDropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown on click outside or Escape
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        countryDropdownRef.current &&
+        !countryDropdownRef.current.contains(event.target as Node)
+      ) {
+        setCountryDropdownOpen(false);
+        setCountrySearchQuery("");
+      }
+    }
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setCountryDropdownOpen(false);
+        setCountrySearchQuery("");
+      }
+    }
+
+    if (countryDropdownOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("keydown", handleKeyDown);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [countryDropdownOpen]);
+
+  const filteredCountries = COUNTRIES.filter((c) => {
+    const q = countrySearchQuery.toLowerCase().trim();
+    if (!q) return true;
+    return (
+      c.name.toLowerCase().includes(q) ||
+      c.dialCode.toLowerCase().includes(q) ||
+      c.code.toLowerCase().includes(q)
+    );
+  });
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.trim()) {
@@ -161,7 +244,7 @@ export default function BrandInquirySection({
       if (onSubmit) {
         await onSubmit({
           email,
-          whatsapp,
+          whatsapp: whatsapp ? `${selectedCountry.dialCode} ${whatsapp}` : "",
           budget: selectedBudget,
           details: projectDetails,
         });
@@ -186,8 +269,9 @@ export default function BrandInquirySection({
   };
 
   const directWhatsAppUrl = () => {
+    const fullNumber = whatsapp ? `${selectedCountry.dialCode} ${whatsapp}` : "";
     const message = encodeURIComponent(
-      `Hi ${contactPerson.name}!\n\nEmail: ${email}\nBudget: ${selectedBudget || "Flexible"}\nDetails: ${projectDetails}`
+      `Hi ${contactPerson.name}!\n\nEmail: ${email}\nPhone: ${fullNumber}\nBudget: ${selectedBudget || "Flexible"}\nDetails: ${projectDetails}`
     );
     const cleanPhone = contactPerson.phoneDisplay.replace(/[^0-9]/g, "");
     return `https://wa.me/${cleanPhone}?text=${message}`;
@@ -365,28 +449,101 @@ export default function BrandInquirySection({
                       />
                     </div>
 
-                    {/* WhatsApp Number */}
-                    <div className="space-y-1.5">
+                    {/* WhatsApp Number with Dynamic Country Code Selector */}
+                    <div className="space-y-1.5 relative" ref={countryDropdownRef}>
                       <label
                         htmlFor="whatsapp-number"
                         className="block text-sm font-semibold text-white/95 tracking-tight"
                       >
                         {labels.whatsapp}
                       </label>
-                      <div className="flex items-center border-0 border-b border-white/20 focus-within:border-white transition-colors">
-                        <div className="flex items-center gap-1 text-neutral-400 py-2.5 pr-2 select-none shrink-0">
-                          <Globe className="w-4 h-4 text-neutral-400" />
-                          <ChevronDown className="w-3.5 h-3.5" />
-                        </div>
+                      <div className="flex items-center border-0 border-b border-white/20 focus-within:border-white transition-colors relative">
+                        {/* Interactive Country Trigger Button */}
+                        <button
+                          type="button"
+                          onClick={() => setCountryDropdownOpen((prev) => !prev)}
+                          className="flex items-center gap-1.5 py-2.5 pr-2.5 select-none shrink-0 text-neutral-300 hover:text-white transition-colors cursor-pointer group focus:outline-none"
+                          aria-label="Select Country Code"
+                          aria-expanded={countryDropdownOpen}
+                        >
+                          <span className="text-base leading-none select-none">{selectedCountry.flag}</span>
+                          <span className="text-xs font-semibold text-neutral-200 tracking-tight">{selectedCountry.dialCode}</span>
+                          <ChevronDown
+                            className={`w-3.5 h-3.5 text-neutral-400 group-hover:text-white transition-transform duration-200 ${
+                              countryDropdownOpen ? "rotate-180 text-white" : ""
+                            }`}
+                          />
+                        </button>
+
                         <input
                           id="whatsapp-number"
                           type="tel"
                           value={whatsapp}
                           onChange={(e) => setWhatsapp(e.target.value)}
                           placeholder={placeholders.whatsapp}
-                          className="w-full bg-transparent border-0 py-2.5 text-white placeholder:text-neutral-500 text-sm sm:text-base focus:outline-none"
+                          className="w-full bg-transparent border-0 py-2.5 pl-1.5 text-white placeholder:text-neutral-500 text-sm sm:text-base focus:outline-none"
                         />
                       </div>
+
+                      {/* Minimal & Attractive Glassmorphic Floating Country Dropdown */}
+                      {countryDropdownOpen && (
+                        <div className="absolute top-full left-0 mt-2 z-50 w-72 sm:w-80 rounded-2xl bg-[#11131c]/95 backdrop-blur-2xl border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.7)] p-2.5 space-y-2 animate-in fade-in zoom-in-95 duration-150">
+                          {/* Search Header */}
+                          <div className="relative">
+                            <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400 pointer-events-none" />
+                            <input
+                              type="text"
+                              autoFocus
+                              value={countrySearchQuery}
+                              onChange={(e) => setCountrySearchQuery(e.target.value)}
+                              placeholder="Search country or code..."
+                              className="w-full pl-8 pr-3 py-2 rounded-xl bg-white/[0.06] border border-white/10 text-xs text-white placeholder:text-neutral-500 focus:outline-none focus:border-[#8b5cf6] transition-colors"
+                            />
+                          </div>
+
+                          {/* Country List */}
+                          <div className="max-h-56 overflow-y-auto space-y-0.5 pr-1 custom-scrollbar">
+                            {filteredCountries.length > 0 ? (
+                              filteredCountries.map((c) => {
+                                const isCurrent = c.code === selectedCountry.code;
+                                return (
+                                  <button
+                                    key={c.code}
+                                    type="button"
+                                    onClick={() => {
+                                      setSelectedCountry(c);
+                                      setCountryDropdownOpen(false);
+                                      setCountrySearchQuery("");
+                                    }}
+                                    className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs transition-colors cursor-pointer text-left ${
+                                      isCurrent
+                                        ? "bg-[#8b5cf6]/25 border border-[#8b5cf6]/40 text-white font-medium"
+                                        : "hover:bg-white/[0.08] text-neutral-300 hover:text-white"
+                                    }`}
+                                  >
+                                    <div className="flex items-center gap-2.5 truncate pr-2">
+                                      <span className="text-base leading-none">{c.flag}</span>
+                                      <span className="truncate">{c.name}</span>
+                                    </div>
+                                    <div className="flex items-center gap-2 shrink-0">
+                                      <span className="font-mono text-[11px] text-neutral-400 font-semibold">
+                                        {c.dialCode}
+                                      </span>
+                                      {isCurrent && (
+                                        <Check className="w-3.5 h-3.5 text-[#8b5cf6]" />
+                                      )}
+                                    </div>
+                                  </button>
+                                );
+                              })
+                            ) : (
+                              <p className="text-center py-4 text-xs text-neutral-500">
+                                No countries found
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
 
