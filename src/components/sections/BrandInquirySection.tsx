@@ -44,6 +44,31 @@ export const COUNTRIES: CountryOption[] = [
   { code: "MX", name: "Mexico", flag: "🇲🇽", dialCode: "+52" },
 ];
 
+function CountryFlag({
+  code,
+  name,
+  className = "w-[20px] h-[14px]",
+}: {
+  code: string;
+  name: string;
+  className?: string;
+}) {
+  return (
+    <span
+      className={`inline-flex items-center justify-center relative overflow-hidden rounded-[2px] shrink-0 border border-white/25 shadow-xs bg-neutral-800 ${className}`}
+    >
+      <Image
+        src={`https://flagcdn.com/w40/${code.toLowerCase()}.png`}
+        alt={`${name} flag`}
+        width={22}
+        height={15}
+        className="w-full h-full object-cover"
+        unoptimized
+      />
+    </span>
+  );
+}
+
 export interface ContactPerson {
   name: string;
   role: string;
@@ -458,16 +483,22 @@ export default function BrandInquirySection({
                         {labels.whatsapp}
                       </label>
                       <div className="flex items-center border-0 border-b border-white/20 focus-within:border-white transition-colors relative">
-                        {/* Interactive Country Trigger Button */}
+                        {/* Interactive Country Trigger Button with real CountryFlag */}
                         <button
                           type="button"
                           onClick={() => setCountryDropdownOpen((prev) => !prev)}
-                          className="flex items-center gap-1.5 py-2.5 pr-2.5 select-none shrink-0 text-neutral-300 hover:text-white transition-colors cursor-pointer group focus:outline-none"
+                          className="flex items-center gap-2 py-2.5 pr-2.5 select-none shrink-0 text-neutral-300 hover:text-white transition-colors cursor-pointer group focus:outline-none"
                           aria-label="Select Country Code"
                           aria-expanded={countryDropdownOpen}
                         >
-                          <span className="text-base leading-none select-none">{selectedCountry.flag}</span>
-                          <span className="text-xs font-semibold text-neutral-200 tracking-tight">{selectedCountry.dialCode}</span>
+                          <CountryFlag
+                            code={selectedCountry.code}
+                            name={selectedCountry.name}
+                            className="w-[22px] h-[15px]"
+                          />
+                          <span className="text-xs sm:text-[13px] font-semibold text-neutral-200 tracking-tight">
+                            {selectedCountry.dialCode}
+                          </span>
                           <ChevronDown
                             className={`w-3.5 h-3.5 text-neutral-400 group-hover:text-white transition-transform duration-200 ${
                               countryDropdownOpen ? "rotate-180 text-white" : ""
@@ -485,9 +516,9 @@ export default function BrandInquirySection({
                         />
                       </div>
 
-                      {/* Minimal & Attractive Glassmorphic Floating Country Dropdown */}
+                      {/* Fully Responsive & Glassmorphic Floating Country Dropdown */}
                       {countryDropdownOpen && (
-                        <div className="absolute top-full left-0 mt-2 z-50 w-72 sm:w-80 rounded-2xl bg-[#11131c]/95 backdrop-blur-2xl border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.7)] p-2.5 space-y-2 animate-in fade-in zoom-in-95 duration-150">
+                        <div className="absolute top-full left-0 sm:left-auto sm:right-0 md:left-0 mt-2 z-50 w-[calc(100vw-3.5rem)] sm:w-80 max-w-[340px] rounded-2xl bg-[#11131c]/95 backdrop-blur-2xl border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.7)] p-2.5 space-y-2 animate-in fade-in zoom-in-95 duration-150">
                           {/* Search Header */}
                           <div className="relative">
                             <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400 pointer-events-none" />
@@ -502,7 +533,7 @@ export default function BrandInquirySection({
                           </div>
 
                           {/* Country List */}
-                          <div className="max-h-56 overflow-y-auto space-y-0.5 pr-1 custom-scrollbar">
+                          <div className="max-h-56 sm:max-h-60 overflow-y-auto space-y-0.5 pr-1 custom-scrollbar">
                             {filteredCountries.length > 0 ? (
                               filteredCountries.map((c) => {
                                 const isCurrent = c.code === selectedCountry.code;
@@ -522,7 +553,11 @@ export default function BrandInquirySection({
                                     }`}
                                   >
                                     <div className="flex items-center gap-2.5 truncate pr-2">
-                                      <span className="text-base leading-none">{c.flag}</span>
+                                      <CountryFlag
+                                        code={c.code}
+                                        name={c.name}
+                                        className="w-[20px] h-[14px]"
+                                      />
                                       <span className="truncate">{c.name}</span>
                                     </div>
                                     <div className="flex items-center gap-2 shrink-0">
