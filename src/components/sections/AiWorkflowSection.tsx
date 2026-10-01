@@ -157,10 +157,14 @@ export default function AiWorkflowSection({
     <Icons.ChatGpt key="6" />,
     <Icons.Figma key="7" />,
     <Icons.Midjourney key="8" />,
-    <Icons.Firefly key="9" />,
-    <Icons.Bot key="10" />,
-    <Icons.Claude key="11" />,
-    <Icons.Supabase key="12" />,
+    <Icons.Cursor key="9" />,
+    <Icons.V0 key="10" />,
+    <Icons.Flame key="11" />,
+    <Icons.Claude key="12" />,
+    <Icons.Supabase key="13" />,
+    <Icons.Firefly key="14" />,
+    <Icons.ChatGpt key="15" />,
+    <Icons.Bot key="16" />,
   ];
 
   const backgroundToolsRow2 = [
@@ -171,9 +175,15 @@ export default function AiWorkflowSection({
     <Icons.ChatGpt key="2-5" />,
     <Icons.Supabase key="2-6" />,
     <Icons.Claude key="2-7" />,
-    <Icons.Cursor key="2-8" />,
-    <Icons.V0 key="2-9" />,
-    <Icons.Midjourney key="2-10" />,
+    <Icons.Figma key="2-8" />,
+    <Icons.Miro key="2-9" />,
+    <Icons.Bot key="2-10" />,
+    <Icons.Firefly key="2-11" />,
+    <Icons.ChatGpt key="2-12" />,
+    <Icons.Cursor key="2-13" />,
+    <Icons.V0 key="2-14" />,
+    <Icons.Supabase key="2-15" />,
+    <Icons.Claude key="2-16" />,
   ];
 
   return (
@@ -215,39 +225,67 @@ export default function AiWorkflowSection({
         </div>
 
         {/* ── Tool Cloud Backdrop & Central AI Core Hub ────────────── */}
-        <div className="relative w-full max-w-4xl mx-auto py-6 sm:py-8 flex flex-col items-center justify-center">
+        <div className="relative w-full max-w-5xl mx-auto py-6 sm:py-8 flex flex-col items-center justify-center">
           {/* Dual Marquee / Tool Row Grid */}
           <div
-            className="w-full overflow-hidden select-none space-y-3.5 opacity-30 sm:opacity-40 pointer-events-none"
+            className="w-full overflow-hidden select-none space-y-4 opacity-40 sm:opacity-50 pointer-events-none"
             style={{
               maskImage:
-                "linear-gradient(to right, transparent, black 20%, black 80%, transparent)",
+                "linear-gradient(to right, transparent, black 15%, black 85%, transparent)",
               WebkitMaskImage:
-                "linear-gradient(to right, transparent, black 20%, black 80%, transparent)",
+                "linear-gradient(to right, transparent, black 15%, black 85%, transparent)",
             }}
           >
-            {/* Row 1 */}
-            <div className="flex items-center justify-center gap-3 sm:gap-4 flex-nowrap">
-              {backgroundToolsRow1.map((icon, i) => (
-                <div
-                  key={i}
-                  className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center shrink-0"
-                >
-                  {icon}
+            {/* Row 1: Infinite auto-scroll Left to Right */}
+            <div className="flex overflow-hidden w-full select-none">
+              <div className="flex shrink-0 animate-marquee-reverse whitespace-nowrap">
+                <div className="flex items-center gap-3 sm:gap-4 pr-3 sm:pr-4 shrink-0">
+                  {backgroundToolsRow1.map((icon, i) => (
+                    <div
+                      key={`r1-a-${i}`}
+                      className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center shrink-0 shadow-sm"
+                    >
+                      {icon}
+                    </div>
+                  ))}
                 </div>
-              ))}
+                <div className="flex items-center gap-3 sm:gap-4 pr-3 sm:pr-4 shrink-0" aria-hidden="true">
+                  {backgroundToolsRow1.map((icon, i) => (
+                    <div
+                      key={`r1-b-${i}`}
+                      className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center shrink-0 shadow-sm"
+                    >
+                      {icon}
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
 
-            {/* Row 2 */}
-            <div className="flex items-center justify-center gap-3 sm:gap-4 flex-nowrap -translate-x-6">
-              {backgroundToolsRow2.map((icon, i) => (
-                <div
-                  key={i}
-                  className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center shrink-0"
-                >
-                  {icon}
+            {/* Row 2: Infinite auto-scroll Left to Right (slightly offset speed) */}
+            <div className="flex overflow-hidden w-full select-none">
+              <div className="flex shrink-0 animate-marquee-reverse-slow whitespace-nowrap">
+                <div className="flex items-center gap-3 sm:gap-4 pr-3 sm:pr-4 shrink-0">
+                  {backgroundToolsRow2.map((icon, i) => (
+                    <div
+                      key={`r2-a-${i}`}
+                      className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center shrink-0 shadow-sm"
+                    >
+                      {icon}
+                    </div>
+                  ))}
                 </div>
-              ))}
+                <div className="flex items-center gap-3 sm:gap-4 pr-3 sm:pr-4 shrink-0" aria-hidden="true">
+                  {backgroundToolsRow2.map((icon, i) => (
+                    <div
+                      key={`r2-b-${i}`}
+                      className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center shrink-0 shadow-sm"
+                    >
+                      {icon}
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
 
