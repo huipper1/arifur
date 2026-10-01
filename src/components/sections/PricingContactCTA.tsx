@@ -26,7 +26,7 @@ export default function PricingContactCTA() {
                 <span>100% Value Guarantee</span>
               </div>
 
-              <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight mb-4">
+              <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight !text-white leading-tight mb-4">
                 Why risk it with the wrong partner?{" "}
                 <span className="font-serif italic text-[var(--accent)]">
                   Secure your project’s future today.

@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { X, ArrowUp, Volume2, VolumeX } from "lucide-react";
+import { X, ArrowUp, Volume2, VolumeX, Puzzle, CircleDollarSign, Menu } from "lucide-react";
 import { getPrimaryWhatsAppUrl } from "@/lib/helpers";
 
 function useIsScrolled(threshold = 200) {
@@ -39,32 +39,32 @@ export default function FooterBar() {
   const menuItems = [
     {
       title: "Home",
-      subtitle: "Home is where the monk lives",
+      subtitle: "Return to homepage",
       href: "/",
     },
     {
-      title: "About us",
-      subtitle: "The journey of Design Monks",
+      title: "About Arifur",
+      subtitle: "Founder, CTO & Full-Stack Developer",
       href: "/about/",
     },
     {
-      title: "Meet the team",
-      subtitle: "An overview of the Monk family",
-      href: "/about/",
+      title: "All Services",
+      subtitle: "SaaS, Mobile & Custom Web Apps",
+      href: "/services/",
     },
     {
-      title: "Blogs",
-      subtitle: "A collection of informative blogs",
+      title: "Selected Projects",
+      subtitle: "Real products and client software",
       href: "/projects/",
     },
     {
-      title: "Career",
-      subtitle: "Work with top global brands, grow your skills",
-      href: "/contact/",
+      title: "Pricing & Packages",
+      subtitle: "Sprint packages, MVP & dedicated build",
+      href: "/pricing/",
     },
     {
       title: "Contact us",
-      subtitle: "Start your dream design journey from here",
+      subtitle: "Start your project inquiry today",
       href: "/contact/",
     },
   ];
@@ -107,13 +107,13 @@ export default function FooterBar() {
         onClick={scrollToTop}
         aria-label="Scroll back to top"
         style={{
-          backgroundColor: "#0d0e12",
+          backgroundColor: "#060709",
           color: "#FFFFFF",
-          borderColor: "rgba(255, 255, 255, 0.18)",
-          boxShadow: "0 10px 30px rgba(0, 0, 0, 0.75)",
+          borderColor: "rgba(255, 255, 255, 0.22)",
+          boxShadow: "0 8px 24px rgba(0, 0, 0, 0.75)",
         }}
-        className={`dm-back-to-top fixed z-50 flex items-center gap-2 cursor-pointer transition-all duration-300 ease-out select-none
-          bottom-[82px] left-4 px-3.5 py-1.5 md:bottom-6 md:left-6 md:px-4 md:py-2.5
+        className={`dm-back-to-top fixed z-50 flex items-center gap-1.5 cursor-pointer transition-all duration-300 ease-out select-none
+          bottom-[74px] left-3 px-3 py-1.5 md:bottom-6 md:left-6 md:px-4 md:py-2.5
           rounded-full border hover:border-white/40 hover:scale-105 active:scale-95 ${
             showTop
               ? "opacity-100 translate-y-0 pointer-events-auto"
@@ -143,11 +143,11 @@ export default function FooterBar() {
           ═══════════════════════════════════════════════════════════════ */}
       {/* ═══════════════════════════════════════════════════════════════
           2. LAPTOP / DESKTOP FLOATING FOOTER DOCK (CENTERED)
-          Exact match to Design Monks dock (media_1790158359052.png):
-          - Width: ~520px, Height: 54px, Rounded: 18px (squircle)
-          - Emerald inner border highlight (exact rgba(48,255,151,0.4))
-          - Clean text links (Projects, Services, Pricing, More)
-          - Center 3D glossy purple action button: [Let's Talk →]
+          Exact match to Design Monks dock (desktop view):
+          - Width: ~530px, Height: 56px, Rounded: 20px (squircle)
+          - Emerald green neon outer border & glow (rgba(48, 255, 151, 0.65))
+          - Clean white text links (Projects, Services, Pricing, More)
+          - Center dark obsidian button with glowing neon purple border [Let's Talk →]
           ═══════════════════════════════════════════════════════════════ */}
       <div
         style={{
@@ -163,18 +163,20 @@ export default function FooterBar() {
           ref={moreRef}
           style={{
             backgroundColor: "#060709",
-            borderColor: "rgba(48, 255, 151, 0.22)",
+            borderColor: "rgba(48, 255, 151, 0.65)",
+            borderWidth: "1.5px",
+            borderStyle: "solid",
             boxShadow:
-              "inset 0 1.5px 2px rgba(48, 255, 151, 0.38), 0 20px 45px rgba(0, 0, 0, 0.95)",
+              "0 0 22px rgba(48, 255, 151, 0.28), inset 0 1px 2px rgba(48, 255, 151, 0.35), 0 20px 45px rgba(0, 0, 0, 0.95)",
           }}
-          className="relative w-[520px] max-w-[92vw] h-[54px] border rounded-[18px] px-3 grid grid-cols-[1fr_1fr_auto_1fr_1fr] items-center backdrop-blur-xl"
+          className="relative w-[530px] max-w-[92vw] h-[56px] rounded-[20px] px-3.5 grid grid-cols-[1fr_1fr_auto_1fr_1fr] items-center backdrop-blur-xl"
         >
           {/* 1. Projects */}
           <Link
             href="/projects/"
             style={{ color: "#FFFFFF" }}
-            className={`dm-dock-link flex items-center justify-center text-[14px] font-medium transition-colors duration-150 !text-white hover:!text-[#A87FFF] ${
-              pathname.startsWith("/projects") ? "font-semibold !text-white" : ""
+            className={`dm-dock-link flex items-center justify-center text-[14.5px] font-semibold tracking-tight transition-colors duration-150 !text-white hover:!text-[#A87FFF] ${
+              pathname.startsWith("/projects") ? "font-bold !text-white" : ""
             }`}
           >
             <span>Projects</span>
@@ -184,39 +186,42 @@ export default function FooterBar() {
           <Link
             href="/services/"
             style={{ color: "#FFFFFF" }}
-            className={`dm-dock-link flex items-center justify-center text-[14px] font-medium transition-colors duration-150 !text-white hover:!text-[#A87FFF] ${
-              pathname.startsWith("/services") ? "font-semibold !text-white" : ""
+            className={`dm-dock-link flex items-center justify-center text-[14.5px] font-semibold tracking-tight transition-colors duration-150 !text-white hover:!text-[#A87FFF] ${
+              pathname.startsWith("/services") ? "font-bold !text-white" : ""
             }`}
           >
             <span>Services</span>
           </Link>
 
-          {/* 3. Center Button: "Let's Talk →" (Exact 3D Glossy Purple Squircle) */}
+          {/* 3. Center Button: "Let's Talk →" (Exact Obsidian squircle with neon purple border) */}
           <Link
             href="/contact/"
             style={{
-              background:
-                "radial-gradient(circle at 82% 18%, rgba(255, 255, 255, 0.38) 0%, transparent 45%), linear-gradient(180deg, #7C3AED 0%, #6326E6 100%)",
-              borderColor: "rgba(255, 255, 255, 0.22)",
+              backgroundColor: "#0a0c12",
+              backgroundImage:
+                "radial-gradient(circle at 88% 12%, rgba(255, 255, 255, 0.28) 0%, transparent 45%)",
+              borderColor: "rgba(139, 92, 246, 0.95)",
+              borderWidth: "1.5px",
+              borderStyle: "solid",
               boxShadow:
-                "inset 0 1px 1px rgba(255, 255, 255, 0.45), 0 4px 18px rgba(110, 65, 248, 0.55)",
+                "0 0 16px rgba(139, 92, 246, 0.45), inset 0 1px 1.5px rgba(255, 255, 255, 0.25)",
               color: "#FFFFFF",
             }}
-            className="h-[38px] px-5 rounded-[12px] border flex items-center justify-center gap-2 text-[14px] font-semibold tracking-tight !text-white hover:brightness-110 hover:scale-[1.02] active:scale-[0.97] transition-all duration-150 group cursor-pointer shadow-md mx-2 shrink-0"
+            className="h-[40px] px-6 rounded-[14px] flex items-center justify-center gap-2.5 text-[14px] font-bold tracking-tight !text-white hover:border-[#a78bfa] hover:shadow-[0_0_24px_rgba(139,92,246,0.65)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-150 group cursor-pointer mx-2 shrink-0"
           >
-            <span>Let&apos;s Talk</span>
+            <span className="!text-white font-bold">Let&apos;s Talk</span>
             <svg
-              width="14"
-              height="14"
+              width="15"
+              height="15"
               viewBox="0 0 16 16"
               fill="none"
               stroke="#FFFFFF"
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="transition-transform duration-200 group-hover:translate-x-0.5 shrink-0"
+              className="transition-transform duration-200 group-hover:translate-x-1 shrink-0"
             >
-              <path d="M2 8h11M9.5 4L13.5 8l-4 4" />
+              <path d="M2.5 8h11M9.5 4L13.5 8l-4 4" />
             </svg>
           </Link>
 
@@ -224,8 +229,8 @@ export default function FooterBar() {
           <Link
             href="/pricing/"
             style={{ color: "#FFFFFF" }}
-            className={`dm-dock-link flex items-center justify-center text-[14px] font-medium transition-colors duration-150 !text-white hover:!text-[#A87FFF] ${
-              pathname.startsWith("/pricing") ? "font-semibold !text-white" : ""
+            className={`dm-dock-link flex items-center justify-center text-[14.5px] font-semibold tracking-tight transition-colors duration-150 !text-white hover:!text-[#A87FFF] ${
+              pathname.startsWith("/pricing") ? "font-bold !text-white" : ""
             }`}
           >
             <span>Pricing</span>
@@ -236,8 +241,8 @@ export default function FooterBar() {
             onClick={() => setMoreOpen(!moreOpen)}
             aria-expanded={moreOpen}
             style={{ color: "#FFFFFF" }}
-            className={`dm-dock-link flex items-center justify-center text-[14px] font-medium transition-colors duration-150 cursor-pointer !text-white hover:!text-[#A87FFF] ${
-              moreOpen ? "font-semibold !text-white" : ""
+            className={`dm-dock-link flex items-center justify-center text-[14.5px] font-semibold tracking-tight transition-colors duration-150 cursor-pointer !text-white hover:!text-[#A87FFF] ${
+              moreOpen ? "font-bold !text-white" : ""
             }`}
           >
             <span>More</span>
@@ -493,9 +498,9 @@ export default function FooterBar() {
           <div
             style={{
               backgroundColor: "#060709",
-              borderTop: "1px solid rgba(48, 255, 151, 0.35)",
+              borderTop: "1.5px solid rgba(48, 255, 151, 0.75)",
               boxShadow:
-                "inset 0 1.5px 2px rgba(48, 255, 151, 0.4), 0 -8px 24px rgba(0,0,0,0.8)",
+                "inset 0 1.5px 2px rgba(48, 255, 151, 0.4), 0 -4px 16px rgba(48, 255, 151, 0.2)",
             }}
             className="flex-1 flex items-center justify-around px-1 pb-1"
           >
@@ -505,13 +510,13 @@ export default function FooterBar() {
               style={{
                 color: pathname.startsWith("/projects")
                   ? "#FFFFFF"
-                  : "rgba(255, 255, 255, 0.8)",
+                  : "rgba(255, 255, 255, 0.85)",
               }}
               className="flex flex-col items-center justify-center gap-1 w-14 py-1 transition-colors hover:text-white group"
             >
               <svg
-                width="22"
-                height="22"
+                width="21"
+                height="21"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -527,25 +532,17 @@ export default function FooterBar() {
               <span className="text-[11px] font-medium tracking-tight">Projects</span>
             </Link>
 
-            {/* 2. Services */}
+            {/* 2. Services (Puzzle Piece) */}
             <Link
               href="/services/"
               style={{
                 color: pathname.startsWith("/services")
                   ? "#FFFFFF"
-                  : "rgba(255, 255, 255, 0.8)",
+                  : "rgba(255, 255, 255, 0.85)",
               }}
               className="flex flex-col items-center justify-center gap-1 w-14 py-1 transition-colors hover:text-white group"
             >
-              <svg
-                width="22"
-                height="22"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="shrink-0 transition-transform duration-150 group-hover:scale-105"
-              >
-                <path d="M20.9 14.86c-.1.07-.23.1-.35.11-.13 0-.25-.02-.37-.07-.29-.14-.6-.2-.92-.2-.31 0-.62.1-.89.27-.27.17-.49.4-.64.68-.15.28-.23.59-.23.91 0 .32.08.63.23.91.15.28.37.51.64.68.27.17.58.27.89.29.32.02.63-.04.92-.17.11-.06.24-.08.37-.08.13 0 .25.04.36.11.11.07.19.16.25.27.06.11.1.24.1.36v4c0 .4-.16.78-.44 1.06-.28.28-.66.44-1.06.44h-3.4c.01-.12.02-.25.02-.37 0-.46-.09-.92-.28-1.34-.18-.42-.45-.8-.79-1.12-.46-.44-1.04-.74-1.67-.86-.63-.12-1.28-.06-1.87.17-.59.23-1.11.63-1.49 1.14-.38.51-.61 1.12-.66 1.76-.01.21-.01.42.02.62H6.25c-.4 0-.78-.16-1.06-.44-.28-.28-.44-.66-.44-1.06v-3.02c-.12.01-.25.02-.37.02-.46 0-.92-.09-1.34-.28-.42-.18-.8-.45-1.12-.79-.32-.34-.56-.73-.72-1.17-.16-.44-.22-.9-.19-1.36.05-.81.4-1.58.98-2.16.57-.58 1.34-.93 2.15-.99.21-.01.42 0 .62.02V6.75c0-.4.16-.78.44-1.06.28-.28.66-.44 1.06-.44h3.4c-.01.12-.02.25-.02.37 0 .46.09.92.28 1.34.18.42.45.8.79 1.12.34.32.73.56 1.17.72.44.16.9.22 1.36.19.81-.05 1.58-.4 2.16-.98.58-.57.93-1.34.99-2.15.01-.21 0-.42-.02-.62h3.4c.4 0 .78.16 1.06.44.28.28.44.66.44 1.06v4c0 .13-.04.25-.1.36-.06.11-.15.2-.26.27z" />
-              </svg>
+              <Puzzle className="w-5 h-5 shrink-0 transition-transform duration-150 group-hover:scale-105 stroke-[1.8]" />
               <span className="text-[11px] font-medium tracking-tight">Services</span>
             </Link>
           </div>
@@ -568,8 +565,8 @@ export default function FooterBar() {
               {/* Emerald Green Neon Contour Stroke */}
               <path
                 d="M 0 0.5 C 10 0.5 14 5 16 12 V 22 C 16 34 26 42 38 42 H 58 C 70 42 80 34 80 22 V 12 C 82 5 86 0.5 96 0.5"
-                stroke="rgba(48, 255, 151, 0.45)"
-                strokeWidth="1.2"
+                stroke="rgba(48, 255, 151, 0.75)"
+                strokeWidth="1.5"
                 fill="none"
               />
             </svg>
@@ -580,24 +577,32 @@ export default function FooterBar() {
               aria-label="Let's Talk"
               style={{
                 background:
-                  "radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.4) 0%, transparent 50%), linear-gradient(180deg, #7C3AED 0%, #6326E6 100%)",
-                borderColor: "rgba(255, 255, 255, 0.25)",
+                  "radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.45) 0%, transparent 45%), linear-gradient(180deg, #7C3AED 0%, #5B21B6 100%)",
+                borderColor: "rgba(255, 255, 255, 0.28)",
                 boxShadow:
-                  "inset 0 1px 1.5px rgba(255, 255, 255, 0.5), 0 6px 22px rgba(110, 65, 248, 0.75)",
+                  "inset 0 1px 1.5px rgba(255, 255, 255, 0.5), 0 8px 24px rgba(110, 65, 248, 0.8)",
                 color: "#FFFFFF",
               }}
               className="relative z-10 -mt-5 w-[56px] h-[56px] rounded-[18px] border flex items-center justify-center text-white active:scale-90 transition-transform duration-150 group cursor-pointer"
             >
               <svg
-                width="26"
-                height="26"
-                viewBox="0 0 32 32"
+                width="28"
+                height="28"
+                viewBox="0 0 28 28"
                 fill="none"
                 className="transition-transform duration-200 group-hover:scale-110"
               >
+                {/* Speech bubble */}
                 <path
-                  d="M28.051 10.5433C27.4244 9.05909 26.504 7.71234 25.347 6.57944C24.19 5.44655 22.812 4.54278 21.2962 3.92923C19.783 3.31568 18.1606 3 16.52 3H15.0016C11.8192 3 8.7668 4.23728 6.5152 6.44197C4.2636 8.64666 3 11.6329 3 14.749V27.216C3 27.5444 3.1352 27.8601 3.3718 28.0943C3.611 28.326 3.9334 28.4584 4.2688 28.4584H17.001C18.5766 28.4584 20.1366 28.1529 21.5926 27.5622C23.0486 26.9716 24.372 26.1085 25.4874 25.0164C26.6002 23.9242 27.4842 22.6309 28.0874 21.2053C28.6906 19.7796 29 18.2496 29 16.7068V15.22C29 13.6136 28.6776 12.025 28.051 10.5433ZM22.4558 18.8351C20.6046 20.4237 18.379 21.2613 16.0182 21.2613C13.6574 21.2613 11.4292 20.4237 9.5806 18.8351C9.1464 18.466 9.1048 17.8219 9.4818 17.3992C9.8614 16.9741 10.5166 16.9334 10.9508 17.3025C12.4146 18.5601 14.167 19.2246 16.0182 19.2246C17.8694 19.2246 19.6192 18.5601 21.0856 17.3025C21.5172 16.9334 21.84 17.4042 22.186 17.8219C22.563 18.2446 22.89 18.466 22.4558 18.8351Z"
+                  d="M14 3.5C8.2 3.5 3.5 7.8 3.5 13.2C3.5 16.1 4.8 18.7 6.9 20.5C6.7 21.9 5.9 23.4 4.8 24.3C4.6 24.5 4.7 24.9 5 24.9C7.3 24.9 9.4 23.8 10.7 22.8C11.8 23.1 12.9 23.2 14 23.2C19.8 23.2 24.5 18.9 24.5 13.2C24.5 7.8 19.8 3.5 14 3.5Z"
                   fill="#FFFFFF"
+                />
+                {/* Curved smile inside bubble */}
+                <path
+                  d="M10 13.5C11 16.5 17 16.5 18 13.5"
+                  stroke="#6D28D9"
+                  strokeWidth="2.4"
+                  strokeLinecap="round"
                 />
               </svg>
             </Link>
@@ -607,64 +612,37 @@ export default function FooterBar() {
           <div
             style={{
               backgroundColor: "#060709",
-              borderTop: "1px solid rgba(48, 255, 151, 0.35)",
+              borderTop: "1.5px solid rgba(48, 255, 151, 0.75)",
               boxShadow:
-                "inset 0 1.5px 2px rgba(48, 255, 151, 0.4), 0 -8px 24px rgba(0,0,0,0.8)",
+                "inset 0 1.5px 2px rgba(48, 255, 151, 0.4), 0 -4px 16px rgba(48, 255, 151, 0.2)",
             }}
             className="flex-1 flex items-center justify-around px-1 pb-1"
           >
-            {/* 4. Pricing */}
+            {/* 3. Pricing */}
             <Link
               href="/pricing/"
               style={{
                 color:
                   pathname.startsWith("/pricing") && !moreOpen
                     ? "#FFFFFF"
-                    : "rgba(255, 255, 255, 0.8)",
+                    : "rgba(255, 255, 255, 0.85)",
               }}
               className="flex flex-col items-center justify-center gap-1 w-14 py-1 transition-colors hover:text-white group"
             >
-              <svg
-                width="22"
-                height="22"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="shrink-0 transition-transform duration-150 group-hover:scale-105"
-              >
-                <circle cx="12" cy="12" r="9.5" />
-                <path d="M12 6.5v11" />
-                <path d="M14.5 9.5a2.5 2.5 0 0 0-5 0c0 2.5 5 1.5 5 4a2.5 2.5 0 0 1-5 0" />
-              </svg>
+              <CircleDollarSign className="w-5 h-5 shrink-0 transition-transform duration-150 group-hover:scale-105 stroke-[1.8]" />
               <span className="text-[11px] font-medium tracking-tight">Pricing</span>
             </Link>
 
-            {/* 5. More */}
+            {/* 4. More */}
             <button
               onClick={() => setMoreOpen(!moreOpen)}
               aria-expanded={moreOpen}
               style={{
-                color: moreOpen ? "#FFFFFF" : "rgba(255, 255, 255, 0.8)",
+                color: moreOpen ? "#FFFFFF" : "rgba(255, 255, 255, 0.85)",
               }}
               className="flex flex-col items-center justify-center gap-1 w-14 py-1 transition-colors cursor-pointer hover:text-white group"
             >
-              <svg
-                width="22"
-                height="22"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                className="shrink-0 transition-transform duration-150 group-hover:scale-105"
-              >
-                <line x1="4" x2="20" y1="7" y2="7" />
-                <line x1="4" x2="20" y1="12" y2="12" />
-                <line x1="4" x2="20" y1="17" y2="17" />
-              </svg>
+              <Menu className="w-5 h-5 shrink-0 transition-transform duration-150 group-hover:scale-105 stroke-[2]" />
               <span className="text-[11px] font-medium tracking-tight">More</span>
             </button>
           </div>

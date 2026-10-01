@@ -1,12 +1,18 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ArrowUpRight, Check, Mail, MessageCircle } from "lucide-react";
 import { profile } from "@/content/profile";
 import { formatPhoneDisplay, getPrimaryWhatsAppUrl } from "@/lib/helpers";
 
 export default function Footer() {
+  const pathname = usePathname();
+  // Don't show redundant pre-footer CTA on pages that already have custom closing/inquiry CTA sections
+  const showPreFooter = pathname !== "/" && !pathname.startsWith("/pricing") && !pathname.startsWith("/contact");
+
   const [subscribed, setSubscribed] = useState(false);
   const [email, setEmail] = useState("");
   const currentYear = new Date().getFullYear();
@@ -23,41 +29,43 @@ export default function Footer() {
   return (
     <footer className="w-full relative overflow-hidden bg-[var(--bg-page)] text-[var(--text-primary)] transition-colors duration-300">
       {/* ── Top Pre-Footer CTA Section ──────────────────────────────── */}
-      <div className="relative z-10 pt-20 sm:pt-24 md:pt-32 pb-16 sm:pb-20 text-center px-4 sm:px-6">
-        {/* Eyebrow / Pill Badge */}
-        <div className="inline-flex items-center justify-center gap-2 px-4 py-1.5 rounded-full bg-[var(--bg-surface)] border border-[var(--border)] shadow-xs mb-6 sm:mb-8">
-          <span className="flex h-2 w-2 relative items-center justify-center">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
-          </span>
-          <span className="text-[13px] font-medium text-[var(--text-secondary)] tracking-tight">
-            Available for Q2/Q3 Collaborations
-          </span>
+      {showPreFooter && (
+        <div className="relative z-10 pt-20 sm:pt-24 md:pt-32 pb-16 sm:pb-20 text-center px-4 sm:px-6">
+          {/* Eyebrow / Pill Badge */}
+          <div className="inline-flex items-center justify-center gap-2 px-4 py-1.5 rounded-full bg-[var(--bg-surface)] border border-[var(--border)] shadow-xs mb-6 sm:mb-8">
+            <span className="flex h-2 w-2 relative items-center justify-center">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
+            </span>
+            <span className="text-[13px] font-medium text-[var(--text-secondary)] tracking-tight">
+              Available for Q2/Q3 Collaborations
+            </span>
+          </div>
+
+          {/* Main Heading (Editorial Serif) */}
+          <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-[68px] font-normal sm:font-medium tracking-tight text-[var(--text-primary)] leading-[1.14] sm:leading-[1.1] max-w-4xl mx-auto mb-5 sm:mb-6">
+            Built for brands <br className="hidden sm:inline" />
+            that mean <span className="italic font-serif text-[var(--accent)]">business.</span>
+          </h2>
+
+          {/* Description Subtitle */}
+          <p className="font-sans text-sm sm:text-base text-[var(--text-secondary)] max-w-[520px] mx-auto leading-relaxed mb-8 sm:mb-10">
+            From early-stage MVPs to scaling products, I help founders and businesses
+            turn ideas into robust, high-performance software. Let&apos;s build yours next.
+          </p>
+
+          {/* Action Button */}
+          <div>
+            <Link
+              href="/contact/"
+              className="inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-2xl bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white font-medium text-sm sm:text-base shadow-[0_10px_25px_-4px_rgba(229,57,53,0.35)] dark:shadow-[0_10px_25px_-4px_rgba(255,107,107,0.35)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 group cursor-pointer"
+            >
+              <span>Discuss Your Project</span>
+              <ArrowUpRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </Link>
+          </div>
         </div>
-
-        {/* Main Heading (Editorial Serif) */}
-        <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-[68px] font-normal sm:font-medium tracking-tight text-[var(--text-primary)] leading-[1.14] sm:leading-[1.1] max-w-4xl mx-auto mb-5 sm:mb-6">
-          Built for brands <br className="hidden sm:inline" />
-          that mean <span className="italic font-serif text-[var(--accent)]">business.</span>
-        </h2>
-
-        {/* Description Subtitle */}
-        <p className="font-sans text-sm sm:text-base text-[var(--text-secondary)] max-w-[520px] mx-auto leading-relaxed mb-8 sm:mb-10">
-          From early-stage MVPs to scaling products, I help founders and businesses
-          turn ideas into robust, high-performance software. Let&apos;s build yours next.
-        </p>
-
-        {/* Action Button */}
-        <div>
-          <Link
-            href="/contact/"
-            className="inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-2xl bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white font-medium text-sm sm:text-base shadow-[0_10px_25px_-4px_rgba(229,57,53,0.35)] dark:shadow-[0_10px_25px_-4px_rgba(255,107,107,0.35)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 group cursor-pointer"
-          >
-            <span>Discuss Your Project</span>
-            <ArrowUpRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </Link>
-        </div>
-      </div>
+      )}
 
       {/* ── Dark Luxury Obsidian Footer Body with Ambient Brand Glow ──── */}
       <div className="relative w-full bg-gradient-to-b from-[#181a20] via-[#101217] to-[#090a0d] text-white pt-16 sm:pt-20 md:pt-24 pb-0 overflow-hidden">
@@ -150,7 +158,7 @@ export default function Footer() {
 
             {/* Col 2: Services (Span 2) */}
             <div className="lg:col-span-2">
-              <h3 className="text-sm font-semibold text-white/95 mb-4 tracking-tight">
+              <h3 className="text-sm font-semibold !text-white mb-4 tracking-tight">
                 Services
               </h3>
               <ul className="space-y-2.5 text-[13px] text-neutral-400">
@@ -199,7 +207,7 @@ export default function Footer() {
 
             {/* Col 3: Navigation (Span 2) */}
             <div className="lg:col-span-2">
-              <h3 className="text-sm font-semibold text-white/95 mb-4 tracking-tight">
+              <h3 className="text-sm font-semibold !text-white mb-4 tracking-tight">
                 Navigation
               </h3>
               <ul className="space-y-2.5 text-[13px] text-neutral-400">
@@ -256,7 +264,7 @@ export default function Footer() {
 
             {/* Col 4: Direct Contact (Span 2) */}
             <div className="lg:col-span-2">
-              <h3 className="text-sm font-semibold text-white/95 mb-4 tracking-tight">
+              <h3 className="text-sm font-semibold !text-white mb-4 tracking-tight">
                 Direct Contact
               </h3>
               <ul className="space-y-2.5 text-[13px] text-neutral-400">
@@ -289,7 +297,7 @@ export default function Footer() {
 
             {/* Col 5: Stay in touch / Updates (Span 3) */}
             <div className="lg:col-span-3 sm:col-span-2 md:col-span-3">
-              <h3 className="text-sm font-semibold text-white/95 mb-2 tracking-tight">
+              <h3 className="text-sm font-semibold !text-white mb-2 tracking-tight">
                 Stay in touch
               </h3>
               <p className="text-xs text-neutral-400 mb-4 leading-relaxed">
@@ -327,8 +335,16 @@ export default function Footer() {
             <div className="relative shrink-0 w-28 h-28 sm:w-44 sm:h-44 md:w-56 md:h-56 lg:w-72 lg:h-72 xl:w-80 xl:h-80 rounded-[30px] sm:rounded-[44px] md:rounded-[56px] lg:rounded-[68px] bg-white/10 backdrop-blur-xl border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.35)] p-3 sm:p-4 md:p-6 lg:p-7 flex items-center justify-center">
               {/* Middle Layer */}
               <div className="w-full h-full rounded-[22px] sm:rounded-[32px] md:rounded-[42px] lg:rounded-[52px] bg-white/15 backdrop-blur-md border border-white/25 shadow-inner p-2.5 sm:p-3.5 md:p-5 lg:p-6 flex items-center justify-center">
-                {/* Inner Solid White Core with subtle ambient warmth */}
-                <div className="w-full h-full rounded-[14px] sm:rounded-[22px] md:rounded-[30px] lg:rounded-[38px] bg-gradient-to-br from-white via-white to-neutral-200 shadow-2xl" />
+                {/* Inner Photo Core */}
+                <div className="relative w-full h-full rounded-[14px] sm:rounded-[22px] md:rounded-[30px] lg:rounded-[38px] overflow-hidden bg-neutral-900 shadow-2xl">
+                  <Image
+                    src={profile.portraitSrc}
+                    alt={profile.displayName}
+                    fill
+                    className="object-cover object-top"
+                    sizes="(max-width: 640px) 112px, (max-width: 768px) 176px, (max-width: 1024px) 224px, 320px"
+                  />
+                </div>
               </div>
             </div>
 

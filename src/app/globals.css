@@ -114,34 +114,47 @@
 }
 
 /* ── Base Styles ────────────────────────────────────────────── */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
   }
-}
 
-body {
-  background: var(--bg-page);
-  color: var(--text-primary);
-  font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
-  font-size: var(--text-body);
-  line-height: 1.6;
-  min-height: 100vh;
-  position: relative;
-  transition: background-color var(--duration-normal) var(--ease-out),
-              color var(--duration-normal) var(--ease-out);
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background: var(--bg-page);
+    color: var(--text-primary);
+    font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+    font-size: var(--text-body);
+    line-height: 1.6;
+    min-height: 100vh;
+    position: relative;
+    transition: background-color var(--duration-normal) var(--ease-out),
+                color var(--duration-normal) var(--ease-out);
+  }
+
+  /* ── Typography ─────────────────────────────────────────────── */
+  h1, h2, h3, h4, h5, h6 {
+    line-height: 1.15;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: inherit;
+  }
+
+  p {
+    max-width: 68ch;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 }
 
 /* ── Modern Grid Background & Depth ─────────────────────────── */
@@ -194,23 +207,6 @@ body {
   filter: blur(90px);
   pointer-events: none;
   z-index: 0;
-}
-
-/* ── Typography ─────────────────────────────────────────────── */
-h1, h2, h3, h4, h5, h6 {
-  line-height: 1.15;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--text-primary);
-}
-
-p {
-  max-width: 68ch;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
 }
 
 /* ── Focus Styles ───────────────────────────────────────────── */
@@ -738,8 +734,8 @@ a {
    ═══════════════════════════════════════════════════════════════ */
 .dm-dock-container {
   background: #060709 !important;
-  border: 1px solid rgba(48, 255, 151, 0.22) !important;
-  box-shadow: inset 0 1.5px 2px rgba(48, 255, 151, 0.38), 0 20px 45px rgba(0, 0, 0, 0.95) !important;
+  border: 1.5px solid rgba(48, 255, 151, 0.65) !important;
+  box-shadow: 0 0 22px rgba(48, 255, 151, 0.28), inset 0 1px 2px rgba(48, 255, 151, 0.35), 0 20px 45px rgba(0, 0, 0, 0.95) !important;
 }
 
 .dm-dock-link {

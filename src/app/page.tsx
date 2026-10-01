@@ -4,6 +4,7 @@ import ServicesOverview from "@/components/sections/ServicesOverview";
 import SelectedWork from "@/components/sections/SelectedWork";
 import AboutPreview from "@/components/sections/AboutPreview";
 import ProcessSection from "@/components/sections/ProcessSection";
+import AiWorkflowSection from "@/components/sections/AiWorkflowSection";
 import FAQSection from "@/components/sections/FAQSection";
 import BrandInquirySection from "@/components/sections/BrandInquirySection";
 import ClosingCTA from "@/components/sections/ClosingCTA";
@@ -37,6 +38,7 @@ export default function HomePage() {
       <AboutPreview />
       <ProcessSection />
       <MarqueeStrip />
+      <AiWorkflowSection />
       <FAQSection />
       <BrandInquirySection />
       <ClosingCTA />
